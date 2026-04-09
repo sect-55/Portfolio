@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Download, Github, Linkedin, Twitter } from "lucide-react";
 import { SITE_CONFIG } from "@/lib/data";
 import type { Metadata } from "next";
-import profileImage from "@/public/img.jpg";
+import ArchitectureGraph from "@/components/ArchitectureGraph";
 
 export const metadata: Metadata = {
   title: `${SITE_CONFIG.name} — ${SITE_CONFIG.title}`,
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <section className="min-h-screen flex items-center pt-16 relative overflow-hidden">
+    <section className="min-h-screen flex items-center pt-8 relative overflow-hidden" style={{ height: '100vh', maxHeight: '100vh', overflow: 'hidden' }}>
       {/* Background grid */}
       <div
         className="absolute inset-0 opacity-[0.03]"
@@ -23,19 +23,19 @@ export default function HomePage() {
       />
       {/* Ambient glow */}
       <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] rounded-full bg-accent/5 blur-[120px] pointer-events-none" />
-      <div className="max-w-6xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-16 items-center w-full">
+      <div className="max-w-6xl mx-auto px-6 py-8 grid md:grid-cols-2 gap-16 items-center w-full" style={{ height: 'calc(100vh - 2rem)', maxHeight: 'calc(100vh - 2rem)' }}>
         {/* Text */}
         <div className="stagger-children">
-          <p className="font-mono text-xs text-accent tracking-[0.25em] uppercase mb-6">
+          <p className="font-mono text-xs text-accent tracking-[0.25em] uppercase mb-4">
             Hello, I&apos;m
           </p>
-          <h1 className="font-display text-6xl md:text-7xl lg:text-8xl font-semibold leading-[0.95] tracking-tight text-text-primary mb-6">
+          <h1 className="font-display text-6xl md:text-7xl lg:text-8xl font-semibold leading-[0.95] tracking-tight text-text-primary mb-4">
             {SITE_CONFIG.fullName}
           </h1>
-          <p className="font-display text-xl md:text-2xl text-text-secondary italic mb-6 leading-snug">
+          <p className="font-display text-xl md:text-2xl text-text-secondary italic mb-4 leading-snug">
             # {SITE_CONFIG.title}
           </p>
-          <p className="text-text-secondary text-base leading-relaxed max-w-md mb-10">
+          <p className="text-text-secondary text-base leading-relaxed max-w-md mb-8">
             {SITE_CONFIG.tagline}
           </p>
           <div className="flex flex-wrap items-center gap-4">
@@ -61,7 +61,7 @@ export default function HomePage() {
           </div>
 
           {/* Socials */}
-          <div className="flex items-center gap-5 mt-10">
+          <div className="flex items-center gap-5 mt-6">
             {[
               { icon: Github, href: SITE_CONFIG.github, label: "GitHub" },
               { icon: Linkedin, href: SITE_CONFIG.linkedin, label: "LinkedIn" },
@@ -85,20 +85,9 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Photo */}
-        <div className="hidden md:flex justify-end">
-          <div className="relative w-72 h-80 lg:w-80 lg:h-96 rounded-sm overflow-hidden border-[4px] border-accent">
-            <Image
-              src={profileImage}
-              alt={SITE_CONFIG.fullName}
-              fill
-              sizes="(max-width: 1024px) 288px, 320px"
-              quality={75}
-              placeholder="blur"
-              className="object-cover"
-              priority
-            />
-          </div>
+        {/* Architecture Graph */}
+        <div className="hidden md:flex justify-center">
+          <ArchitectureGraph />
         </div>
       </div>
     </section>
