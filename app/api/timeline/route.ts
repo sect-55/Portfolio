@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { classify, EventType } from "@/lib/classifier";
 
 export const runtime = "nodejs";
-export const revalidate = 300; // cache for 5 minutes
+export const dynamic = "force-dynamic";
 
 export interface TimelineEvent {
   id: string;
@@ -38,7 +38,6 @@ async function fetchUserEvents(username: string, token?: string): Promise<Github
   };
 
   const events: GithubEvent[] = [];
-  const isDev = process.env.NODE_ENV === "development";
 
   // Cap at 3 pages (300 events) — sufficient for display, much faster
   for (let page = 1; page <= 3; page++) {
@@ -46,7 +45,7 @@ async function fetchUserEvents(username: string, token?: string): Promise<Github
       `https://api.github.com/users/${username}/events?per_page=100&page=${page}`,
       {
         headers,
-        next: { revalidate: isDev ? 0 : 300 },
+        cache: "no-store",
       }
     );
     if (!res.ok) break;
@@ -159,10 +158,8 @@ export async function GET(req: Request) {
       meta: { total: events.length, streak },
     });
 
-    // Allow CDN/browser to cache for 5 min in prod
-    if (process.env.NODE_ENV !== "development") {
-      response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=60");
-    }
+    // Short CDN cache so Vercel edge doesn't serve stale data too long
+    response.headers.set("Cache-Control", "public, s-maxage=60, stale-while-revalidate=30");
 
     return response;
   } catch {

@@ -19,14 +19,12 @@ async function fetchAll(username: string, token?: string) {
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
   const events: GithubEvent[] = [];
-  const isDev = process.env.NODE_ENV === "development";
   for (let page = 1; page <= 10; page++) {
     const res = await fetch(
       `https://api.github.com/users/${username}/events?per_page=100&page=${page}`,
       {
         headers,
-        cache: isDev ? "no-store" : "force-cache",
-        ...(isDev ? {} : { next: { revalidate: 300 } }),
+        cache: "no-store",
       }
     );
     if (!res.ok) break;
