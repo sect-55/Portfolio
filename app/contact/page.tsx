@@ -51,11 +51,11 @@ export default function ContactPage() {
     <div className="pt-24 pb-20">
       <div className="max-w-5xl mx-auto px-6">
         {/* Header */}
-        <div className="mb-16">
-          <p className="font-mono text-xs text-accent tracking-[0.25em] uppercase mb-4">
+        <div className="mb-10 sm:mb-16" style={{animation:"fadeUp 0.6s ease forwards",opacity:0}}>
+          <p className="font-mono text-xs text-[#00E676] tracking-[0.25em] uppercase mb-4">
             Contact
           </p>
-          <h1 className="font-display text-5xl md:text-6xl font-semibold text-text-primary leading-tight">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-6xl font-semibold text-text-primary leading-tight">
             Get in touch
           </h1>
           <p className="text-text-muted text-sm mt-6 max-w-lg leading-relaxed">
@@ -66,25 +66,25 @@ export default function ContactPage() {
 
         <div className="grid md:grid-cols-[1fr_1.6fr] gap-12">
           {/* Info panel */}
-          <div>
+          <div style={{animation:"fadeUp 0.6s ease forwards",animationDelay:"0.15s",opacity:0}}>
             <div className="space-y-6 mb-10">
               <div className="flex items-start gap-3">
-                <div className="w-9 h-9 rounded-sm bg-accent-glow border border-accent/20 flex items-center justify-center shrink-0 mt-0.5">
-                  <Mail size={15} className="text-accent" />
+                <div className="w-9 h-9 rounded-sm bg-surface/30 border border-[#00E676]/20 flex items-center justify-center shrink-0 mt-0.5">
+                  <Mail size={15} className="text-[#00E676]" />
                 </div>
                 <div>
                   <p className="text-xs text-text-muted mb-0.5">Email</p>
                   <a
                     href={`mailto:${SITE_CONFIG.email}`}
-                    className="text-sm text-text-primary hover:text-accent transition-colors"
+                    className="text-sm text-text-primary hover:text-[#00E676] transition-colors"
                   >
                     {SITE_CONFIG.email}
                   </a>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-9 h-9 rounded-sm bg-accent-glow border border-accent/20 flex items-center justify-center shrink-0 mt-0.5">
-                  <MapPin size={15} className="text-accent" />
+                <div className="w-9 h-9 rounded-sm bg-surface/30 border border-[#00E676]/20 flex items-center justify-center shrink-0 mt-0.5">
+                  <MapPin size={15} className="text-[#00E676]" />
                 </div>
                 <div>
                   <p className="text-xs text-text-muted mb-0.5">Location</p>
@@ -102,14 +102,15 @@ export default function ContactPage() {
                   { icon: Github, href: SITE_CONFIG.github, label: "GitHub" },
                   { icon: Linkedin, href: SITE_CONFIG.linkedin, label: "LinkedIn" },
                   { icon: Twitter, href: SITE_CONFIG.twitter, label: "Twitter" },
-                ].map(({ icon: Icon, href, label }) => (
+                ].map(({ icon: Icon, href, label }, i) => (
                   <a
                     key={label}
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="w-10 h-10 rounded-sm border border-border flex items-center justify-center text-text-muted hover:border-accent hover:text-accent transition-all"
+                    className="w-10 h-10 rounded-sm border border-border flex items-center justify-center text-text-muted hover:border-[#00E676] hover:text-[#00E676] hover:scale-110 transition-all"
+                    style={{animation:"fadeUp 0.4s ease forwards",animationDelay:`${0.3 + i * 0.07}s`,opacity:0}}
                   >
                     <Icon size={16} />
                   </a>
@@ -117,8 +118,8 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="mt-10 border border-border bg-surface/30 rounded-sm p-6">
-              <p className="font-mono text-xs text-accent mb-2">Availability</p>
+            <div className="mt-10 border border-border bg-surface/30 rounded-sm p-6" style={{animation:"fadeUp 0.5s ease forwards",animationDelay:"0.4s",opacity:0}}>
+              <p className="font-mono text-xs text-[#00E676] mb-2">Availability</p>
               <p className="text-sm text-text-muted leading-relaxed">
                 Currently open to full-time backend / systems roles and
                 fast-paced, real-world building environments.
@@ -127,13 +128,13 @@ export default function ContactPage() {
           </div>
 
           {/* Form */}
-          <div>
+          <div style={{animation:"fadeUp 0.6s ease forwards",animationDelay:"0.2s",opacity:0}}>
             <form
               onSubmit={handleSubmit}
               className="space-y-5"
               noValidate
             >
-                <div className="grid sm:grid-cols-2 gap-5">
+                <div className="grid sm:grid-cols-2 gap-5" style={{animation:"fadeUp 0.4s ease forwards",animationDelay:"0.25s",opacity:0}}>
                   <div>
                     <label
                       htmlFor="name"
@@ -149,7 +150,7 @@ export default function ContactPage() {
                       value={form.name}
                       onChange={handleChange}
                       placeholder="Your name"
-                      className="w-full bg-surface border border-border rounded-sm px-4 py-3 text-sm text-text-primary placeholder-text-muted focus:outline-none focus:border-accent transition-colors"
+                      className="w-full bg-surface border border-border rounded-sm px-4 py-3 text-sm text-text-primary placeholder-text-muted focus:outline-none focus:border-[#00E676] transition-colors"
                     />
                   </div>
                   <div>
@@ -167,12 +168,12 @@ export default function ContactPage() {
                       value={form.email}
                       onChange={handleChange}
                       placeholder="your@email.com"
-                      className="w-full bg-surface border border-border rounded-sm px-4 py-3 text-sm text-text-primary placeholder-text-muted focus:outline-none focus:border-accent transition-colors"
+                      className="w-full bg-surface border border-border rounded-sm px-4 py-3 text-sm text-text-primary placeholder-text-muted focus:outline-none focus:border-[#00E676] transition-colors"
                     />
                   </div>
                 </div>
 
-                <div>
+                <div style={{animation:"fadeUp 0.4s ease forwards",animationDelay:"0.3s",opacity:0}}>
                   <label
                     htmlFor="subject"
                     className="block font-mono text-xs text-text-muted mb-2"
@@ -187,11 +188,11 @@ export default function ContactPage() {
                     value={form.subject}
                     onChange={handleChange}
                     placeholder="What's this about?"
-                    className="w-full bg-surface border border-border rounded-sm px-4 py-3 text-sm text-text-primary placeholder-text-muted focus:outline-none focus:border-accent transition-colors"
+                    className="w-full bg-surface border border-border rounded-sm px-4 py-3 text-sm text-text-primary placeholder-text-muted focus:outline-none focus:border-[#00E676] transition-colors"
                   />
                 </div>
 
-                <div>
+                <div style={{animation:"fadeUp 0.4s ease forwards",animationDelay:"0.35s",opacity:0}}>
                   <label
                     htmlFor="message"
                     className="block font-mono text-xs text-text-muted mb-2"
@@ -206,7 +207,7 @@ export default function ContactPage() {
                     value={form.message}
                     onChange={handleChange}
                     placeholder="Tell me what you have in mind..."
-                    className="w-full bg-surface border border-border rounded-sm px-4 py-3 text-sm text-text-primary placeholder-text-muted focus:outline-none focus:border-accent transition-colors resize-none"
+                    className="w-full bg-surface border border-border rounded-sm px-4 py-3 text-sm text-text-primary placeholder-text-muted focus:outline-none focus:border-[#00E676] transition-colors resize-none"
                   />
                 </div>
 
@@ -220,11 +221,12 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="w-full group inline-flex items-center justify-center gap-2 bg-accent text-bg py-3.5 text-sm font-semibold rounded-sm hover:bg-accent/90 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full group inline-flex items-center justify-center gap-2 border border-[#00E676] text-[#00E676] py-3.5 text-sm font-semibold rounded-sm hover:bg-[#00E676]/10 hover:scale-[1.02] transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                style={{animation:"fadeUp 0.4s ease forwards",animationDelay:"0.4s",opacity:0}}
               >
                 {status === "loading" ? (
                   <>
-                    <span className="w-4 h-4 border-2 border-bg/30 border-t-bg rounded-full animate-spin" />
+                    <span className="w-4 h-4 border-2 border-[#00E676]/30 border-t-[#00E676] rounded-full animate-spin" />
                     Sending...
                   </>
                 ) : (

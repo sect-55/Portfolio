@@ -1,4 +1,4 @@
-import type { Project, BlogPost, Skill, Experience } from "@/types";
+  import type { Project, BlogPost, Skill, Experience } from "@/types";
 
 export const SITE_CONFIG = {
   name: "SECT",
