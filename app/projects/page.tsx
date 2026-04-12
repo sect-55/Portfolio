@@ -86,6 +86,73 @@ function groupByDate(events: TLEvent[]) {
   return Array.from(map.entries());
 }
 
+type ContribDay = { date: string; contributionCount: number };
+
+function getColor(count: number): string {
+  if (count === 0) return "#161b22";
+  if (count <= 3)  return "#0e4429";
+  if (count <= 6)  return "#006d32";
+  if (count <= 9)  return "#26a641";
+  return "#39d353";
+}
+
+function ContribHeatmap({ weeks, total }: { weeks: ContribDay[][]; total: number }) {
+  const recentWeeks = weeks.slice(-17);
+
+  const monthLabels: { label: string; col: number }[] = [];
+  recentWeeks.forEach((week, wi) => {
+    const first = week[0];
+    if (!first) return;
+    const d = new Date(first.date + "T00:00:00Z");
+    if (d.getDate() <= 7) {
+      monthLabels.push({ label: d.toLocaleString("en-US", { month: "short", timeZone: "UTC" }), col: wi });
+    }
+  });
+
+  return (
+    <div>
+      <div className="overflow-x-auto">
+        {/* Month labels */}
+        <div className="flex gap-[4px] mb-1">
+          {recentWeeks.map((_, wi) => {
+            const lbl = monthLabels.find(m => m.col === wi);
+            return (
+              <div key={wi} className="w-[16px] shrink-0">
+                {lbl ? <span className="font-mono text-[9px] text-zinc-500 whitespace-nowrap">{lbl.label}</span> : null}
+              </div>
+            );
+          })}
+        </div>
+        {/* Grid */}
+        <div className="flex gap-[4px]">
+          {recentWeeks.map((week, wi) => (
+            <div key={wi} className="flex flex-col gap-[4px]">
+              {week.map((day) => (
+                <div
+                  key={day.date}
+                  title={`${day.date}: ${day.contributionCount} contributions`}
+                  className="w-[16px] h-[16px] rounded-[3px] cursor-pointer hover:ring-1 hover:ring-white/30 transition-all"
+                  style={{ backgroundColor: getColor(day.contributionCount) }}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+        {/* Legend */}
+        <div className="flex items-center gap-1.5 mt-3 justify-end">
+          <span className="font-mono text-[9px] text-zinc-500">{total.toLocaleString()} this year</span>
+          <span className="mx-1 text-zinc-700 text-[9px]">·</span>
+          <span className="font-mono text-[9px] text-zinc-600">Less</span>
+          {[0, 3, 6, 9, 12].map((v) => (
+            <div key={v} className="w-[16px] h-[16px] rounded-[3px]" style={{ backgroundColor: getColor(v) }} />
+          ))}
+          <span className="font-mono text-[9px] text-zinc-600">More</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function GithubTimelineModal({ onClose }: { onClose: () => void }) {
   const [events, setEvents] = useState<TLEvent[]>([]);
   const [meta, setMeta] = useState<TLMeta>({ total: 0, streak: 0 });
@@ -93,6 +160,8 @@ function GithubTimelineModal({ onClose }: { onClose: () => void }) {
   const [loading, setLoading] = useState(true);
   const [activeType, setActiveType] = useState<EventType | null>(null);
   const [activeRepo, setActiveRepo] = useState<string | null>(null);
+  const [contribWeeks, setContribWeeks] = useState<ContribDay[][]>([]);
+  const [contribTotal, setContribTotal] = useState(0);
   const username = "sect-55";
   // Cache all events locally — filters applied client-side, no extra API calls
   const allEventsCache = useRef<TLEvent[] | null>(null);
@@ -111,9 +180,10 @@ function GithubTimelineModal({ onClose }: { onClose: () => void }) {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const [tlRes, repoRes] = await Promise.all([
+      const [tlRes, repoRes, contribRes] = await Promise.all([
         fetch(`/api/timeline?limit=200`),
         reposCache.current ? Promise.resolve(null) : fetch("/api/timeline/repos", { cache: "force-cache" }),
+        fetch("/api/contributions"),
       ]);
       const tl = await tlRes.json();
       allEventsCache.current = tl.data || [];
@@ -121,6 +191,9 @@ function GithubTimelineModal({ onClose }: { onClose: () => void }) {
       if (repoRes) {
         reposCache.current = await repoRes.json();
       }
+      const contrib = await contribRes.json();
+      setContribWeeks(contrib.weeks || []);
+      setContribTotal(contrib.total || 0);
       setEvents(allEventsCache.current ?? []);
       setMeta(allMetaCache.current ?? { total: 0, streak: 0 });
       setRepos(reposCache.current || []);
@@ -267,39 +340,57 @@ function GithubTimelineModal({ onClose }: { onClose: () => void }) {
 // ─── Projects Page ────────────────────────────────────────────────────────────
 
 export default function ProjectsPage() {
-  const projects = PROJECTS.slice(0, 2);
+  const projects = PROJECTS.slice(0, 1);
   const [structureOpen, setStructureOpen] = useState(false);
   const [githubOpen, setGithubOpen] = useState(false);
   const [githubBtnHovered, setGithubBtnHovered] = useState(false);
   const [structureBtnHovered, setStructureBtnHovered] = useState(false);
+  const [contribWeeks, setContribWeeks] = useState<ContribDay[][]>([]);
+  const [contribTotal, setContribTotal] = useState(0);
+
+  useEffect(() => {
+    fetch("/api/contributions")
+      .then((r) => r.json())
+      .then((d) => { setContribWeeks(d.weeks || []); setContribTotal(d.total || 0); })
+      .catch(() => {});
+  }, []);
 
   return (
     <div className="pt-24 pb-20">
       {structureOpen && <DecURLStructureModal onClose={() => setStructureOpen(false)} />}
       {githubOpen && <GithubTimelineModal onClose={() => setGithubOpen(false)} />}
 
-      <div className="max-w-6xl mx-auto px-6">
-        {/* Actively Building card - hover disabled when Github button hovered */}
-        <div className={`mb-6 border border-border bg-surface/30 rounded-sm p-6 transition-all duration-300 ${githubBtnHovered ? "" : "hover:border-[#00E676]/40 hover:bg-surface/70"}`} style={{animation:"fadeUp 0.6s ease forwards",opacity:0}}>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
-            <div className="flex items-center gap-2">
-              <span className="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="font-mono text-sm text-green-400 uppercase tracking-widest">Actively Building</span>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        {/* Row 1: Actively Building + DecURL */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-stretch mb-4 md:mb-6">
+          {/* Actively Building card */}
+          <div
+            className={`border border-border bg-surface/30 rounded-sm p-5 transition-all duration-300 ${githubBtnHovered ? "" : "hover:border-[#00E676]/40 hover:bg-surface/70"}`}
+            style={{animation:"fadeUp 0.6s ease forwards",opacity:0}}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <span className="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                <span className="font-mono text-sm text-green-400 uppercase tracking-widest">Actively Building</span>
+              </div>
+              <button
+                onClick={() => setGithubOpen(true)}
+                onMouseEnter={() => setGithubBtnHovered(true)}
+                onMouseLeave={() => setGithubBtnHovered(false)}
+                className="inline-flex items-center gap-2 border border-border-light text-text-secondary px-4 py-2 text-sm font-semibold rounded-sm hover:border-green-400 hover:text-green-400 transition-all duration-200"
+              >
+                <Github size={15} />
+                Detailed
+              </button>
             </div>
-            <button
-              onClick={() => setGithubOpen(true)}
-              onMouseEnter={() => setGithubBtnHovered(true)}
-              onMouseLeave={() => setGithubBtnHovered(false)}
-              className="inline-flex items-center gap-2 border border-border-light text-text-secondary px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base font-semibold rounded-sm hover:border-green-400 hover:text-green-400 transition-all duration-200 self-start sm:self-auto"
-            >
-              <Github size={18} />
-              Github Timeline
-            </button>
+            {contribWeeks.length > 0 && (
+              <div className="border-t border-border pt-4">
+                <ContribHeatmap weeks={contribWeeks} total={contribTotal} />
+              </div>
+            )}
           </div>
-        </div>
 
-        {/* Project cards */}
-        <div className="grid md:grid-cols-2 gap-6">
+          {/* DecURL card */}
           {projects.map((project, i) => (
             <article
               key={project.id}
@@ -315,11 +406,8 @@ export default function ProjectsPage() {
                 </div>
                 <span className="text-xs text-text-muted border border-border px-2 py-0.5 rounded-sm group-hover:text-[#00E676] group-hover:border-[#00E676]/50 transition-colors duration-300">{project.category}</span>
               </div>
-
               <div className="flex items-center gap-3 mb-3">
-                <h3 className="font-display text-2xl font-semibold text-text-primary group-hover:text-[#00E676] transition-colors">
-                  {project.title}
-                </h3>
+                <h3 className="font-display text-2xl font-semibold text-text-primary group-hover:text-[#00E676] transition-colors">{project.title}</h3>
                 {project.id === "decurl" && (
                   <button
                     onClick={() => setStructureOpen((v) => !v)}
@@ -331,9 +419,7 @@ export default function ProjectsPage() {
                   </button>
                 )}
               </div>
-
               <p className="text-base text-text-muted leading-relaxed flex-1 mb-5">{project.description}</p>
-
               <div className="flex flex-wrap gap-1.5 mb-5">
                 {project.tech.slice(0, 5).map((t) => (
                   <span key={t} className="font-mono text-xs text-text-muted bg-border/50 px-2 py-0.5 rounded-sm">{t}</span>
@@ -342,7 +428,6 @@ export default function ProjectsPage() {
                   <span className="font-mono text-xs text-text-muted px-1">+{project.tech.length - 5}</span>
                 )}
               </div>
-
               <div className="flex items-center gap-4 pt-4 border-t border-border">
                 {project.github && (
                   <a href={project.github} target="_blank" rel="noopener noreferrer"
@@ -360,6 +445,54 @@ export default function ProjectsPage() {
             </article>
           ))}
         </div>
+
+        {/* Row 2: Portfolio card (left) */}
+        {(() => {
+          const portfolio = PROJECTS.find((p) => p.id === "platform-hub");
+          if (!portfolio) return null;
+          return (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+              <article
+                style={{animation:"fadeUp 0.55s ease forwards",animationDelay:"0.25s",opacity:0}}
+                className="group border border-border bg-surface/30 rounded-sm p-6 transition-all duration-300 flex flex-col hover:border-[#00E676]/40 hover:bg-surface/70"
+              >
+                <div className="flex items-center justify-between mb-5">
+                  <div className="flex items-center gap-2">
+                    {portfolio.featured && (
+                      <span className="font-mono text-[10px] text-[#00E676] border border-[#00E676]/30 px-1.5 py-0.5 rounded-sm">featured</span>
+                    )}
+                    <span className="font-mono text-xs text-text-muted">{portfolio.year}</span>
+                  </div>
+                  <span className="text-xs text-text-muted border border-border px-2 py-0.5 rounded-sm group-hover:text-[#00E676] group-hover:border-[#00E676]/50 transition-colors duration-300">{portfolio.category}</span>
+                </div>
+                <h3 className="font-display text-2xl font-semibold text-text-primary group-hover:text-[#00E676] transition-colors mb-3">{portfolio.title}</h3>
+                <p className="text-base text-text-muted leading-relaxed flex-1 mb-5">{portfolio.description}</p>
+                <div className="flex flex-wrap gap-1.5 mb-5">
+                  {portfolio.tech.slice(0, 5).map((t) => (
+                    <span key={t} className="font-mono text-xs text-text-muted bg-border/50 px-2 py-0.5 rounded-sm">{t}</span>
+                  ))}
+                  {portfolio.tech.length > 5 && (
+                    <span className="font-mono text-xs text-text-muted px-1">+{portfolio.tech.length - 5}</span>
+                  )}
+                </div>
+                <div className="flex items-center gap-4 pt-4 border-t border-border">
+                  {portfolio.github && (
+                    <a href={portfolio.github} target="_blank" rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 text-xs text-text-secondary hover:text-[#00E676] transition-colors">
+                      <Github size={13} /> Code
+                    </a>
+                  )}
+                  {portfolio.live && (
+                    <a href={portfolio.live} target="_blank" rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 text-xs text-text-secondary hover:text-[#00E676] transition-colors">
+                      <ExternalLink size={13} /> Live
+                    </a>
+                  )}
+                </div>
+              </article>
+            </div>
+          );
+        })()}
 
         {/* Footer CTA */}
         <div className="mt-16 border-t border-border pt-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4" style={{animation:"fadeUp 0.6s ease forwards",animationDelay:"0.35s",opacity:0}}>

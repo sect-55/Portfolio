@@ -13,21 +13,21 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <section className="min-h-[100dvh] flex items-center pt-20 pb-8 md:pt-8 relative">
-      <div className="max-w-6xl mx-auto px-6 py-8 grid md:grid-cols-2 gap-16 items-center w-full">
+    <section className="min-h-[100dvh] flex items-center pt-20 pb-10 md:pt-8 relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 md:py-8 grid md:grid-cols-2 gap-8 md:gap-16 items-center w-full">
         {/* Text */}
         <div className="stagger-children">
           <HeroText fullName={SITE_CONFIG.fullName} />
           <p className="font-display text-xl md:text-2xl text-text-secondary italic mb-4 leading-snug">
             # {SITE_CONFIG.title}
           </p>
-          <p className="text-text-secondary text-base leading-relaxed max-w-md mb-4">
+          <p className="text-text-secondary text-base leading-relaxed max-w-md mb-6">
             {SITE_CONFIG.tagline}
           </p>
           <HomeCTA resumeUrl={SITE_CONFIG.resumeUrl} />
 
           {/* Socials */}
-          <div className="flex items-center gap-5 mt-6">
+          <div className="flex items-center gap-4 mt-7">
             {[
               { icon: Github, href: SITE_CONFIG.github, label: "GitHub" },
               { icon: Linkedin, href: SITE_CONFIG.linkedin, label: "LinkedIn" },
@@ -39,20 +39,16 @@ export default function HomePage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="text-text-muted hover:text-[#00E676] transition-colors duration-200"
+                className="w-8 h-8 flex items-center justify-center rounded-sm border border-white/[0.06] text-text-muted hover:border-[#00E676]/40 hover:text-[#00E676] transition-all duration-200"
               >
-                <Icon size={18} />
+                <Icon size={15} />
               </a>
             ))}
-            <span className="text-border-light text-sm">|</span>
-            <span className="font-mono text-xs text-text-muted">
-              {SITE_CONFIG.location}
-            </span>
           </div>
         </div>
 
         {/* Architecture Graph */}
-        <div className="flex justify-center">
+        <div className="hidden md:flex justify-center">
           <ArchitectureGraph />
         </div>
       </div>

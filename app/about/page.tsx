@@ -13,8 +13,8 @@ export default function AboutPage() {
   const conciseSkills = SKILLS.slice(0, 10);
 
   return (
-    <div className="pt-20 pb-8">
-      <div className="max-w-6xl mx-auto px-6">
+    <div className="pt-20 pb-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="mb-8" style={{animation:"fadeUp 0.6s ease forwards",opacity:0}}>
           <p className="font-mono text-xs text-[#00E676] tracking-[0.25em] uppercase mb-4">
@@ -54,7 +54,7 @@ export default function AboutPage() {
           </div>
 
           <aside className="border border-border rounded-sm p-6 bg-surface/30" style={{animation:"fadeUp 0.6s ease forwards",animationDelay:"0.3s",opacity:0}}>
-            <p className="font-mono text-xs text-text-muted uppercase tracking-widest mb-4">
+            <p className="font-mono text-xs text-text-muted uppercase tracking-widest mb-5">
               Technical Skills
             </p>
             <div className="flex flex-wrap gap-2">
