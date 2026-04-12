@@ -12,9 +12,9 @@ export default function Footer() {
           <div>
             <Link
               href="/"
-              className="font-display text-2xl font-semibold text-text-primary hover:text-[#00E676] transition-colors"
+              className="font-display text-2xl font-semibold text-text-primary hover:text-[#ffffff] transition-colors"
             >
-              {SITE_CONFIG.name}<span className="text-[#00E676]">.</span>
+              {SITE_CONFIG.name}<span className="text-[#ffffff]">.</span>
             </Link>
           </div>
 
@@ -28,7 +28,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-text-secondary hover:text-[#00E676] transition-colors underline-anim"
+                    className="text-sm text-text-secondary hover:text-[#ffffff] transition-colors underline-anim"
                   >
                     {link.label}
                   </Link>
@@ -47,7 +47,7 @@ export default function Footer() {
                 href={SITE_CONFIG.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-text-muted hover:text-[#00E676] transition-colors"
+                className="text-text-muted hover:text-[#ffffff] transition-colors"
                 aria-label="GitHub"
               >
                 <Github size={18} />
@@ -56,7 +56,7 @@ export default function Footer() {
                 href={SITE_CONFIG.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-text-muted hover:text-[#00E676] transition-colors"
+                className="text-text-muted hover:text-[#ffffff] transition-colors"
                 aria-label="LinkedIn"
               >
                 <Linkedin size={18} />
@@ -65,7 +65,7 @@ export default function Footer() {
                 href={SITE_CONFIG.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-text-muted hover:text-[#00E676] transition-colors"
+                className="text-text-muted hover:text-[#ffffff] transition-colors"
                 aria-label="Twitter"
               >
                 <Twitter size={18} />
@@ -73,7 +73,7 @@ export default function Footer() {
             </div>
             <a
               href={`mailto:${SITE_CONFIG.email}`}
-              className="text-sm text-text-secondary hover:text-[#00E676] transition-colors underline-anim"
+              className="text-sm text-text-secondary hover:text-[#ffffff] transition-colors underline-anim"
             >
               {SITE_CONFIG.email}
             </a>
@@ -92,7 +92,7 @@ export default function Footer() {
               href="https://cursor.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-[#00E676] transition-colors"
+              className="hover:text-[#ffffff] transition-colors"
             >
               Cursor
             </a>
@@ -102,3 +102,6 @@ export default function Footer() {
     </footer>
   );
 }
+
+
+

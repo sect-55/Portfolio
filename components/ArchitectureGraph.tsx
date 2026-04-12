@@ -20,11 +20,11 @@ export default function ArchitectureGraph() {
       <div className="border-t border-zinc-800 pt-2 mb-3">
         <div className="flex items-center justify-between text-sm mb-2">
           <span className="text-zinc-400">Average Response Time</span>
-          <span className="text-accent font-mono font-semibold">~100ms</span>
+          <span className="text-white font-mono font-semibold text-base">~100ms</span>
         </div>
         <div className="flex items-center justify-between text-sm mt-2">
           <span className="text-zinc-400">Security</span>
-          <span className="text-green-400 font-mono text-sm">TLS 1.3 Encrypted</span>
+          <span className="text-white font-mono text-base">TLS 1.3 Encrypted</span>
         </div>
       </div>
 

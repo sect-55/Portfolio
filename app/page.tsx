@@ -39,7 +39,7 @@ export default function HomePage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="w-8 h-8 flex items-center justify-center rounded-sm border border-white/[0.06] text-text-muted hover:border-[#00E676]/40 hover:text-[#00E676] transition-all duration-200"
+                className="w-8 h-8 flex items-center justify-center rounded-sm border border-white/[0.06] text-text-muted hover:border-[#ffffff]/40 hover:text-[#ffffff] transition-all duration-200"
               >
                 <Icon size={15} />
               </a>
@@ -55,3 +55,6 @@ export default function HomePage() {
     </section>
   );
 }
+
+
+

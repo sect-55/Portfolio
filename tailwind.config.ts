@@ -21,9 +21,9 @@ const config: Config = {
         "accent-glow": "rgba(201,169,110,0.15)",
       },
       fontFamily: {
-        display: ["General Sans", "var(--font-inter)", "-apple-system", "sans-serif"],
-        ui: ["General Sans", "var(--font-inter)", "-apple-system", "sans-serif"],
-        body: ["General Sans", "var(--font-inter)", "-apple-system", "sans-serif"],
+        display: ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "sans-serif"],
+        ui: ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "sans-serif"],
+        body: ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "sans-serif"],
         mono: ["var(--font-mono)", "JetBrains Mono", "monospace"],
       },
       animation: {

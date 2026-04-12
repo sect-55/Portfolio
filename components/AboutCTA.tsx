@@ -12,10 +12,10 @@ export default function AboutCTA() {
       {/* View Resume — border wipes right→left on Get in touch hover */}
       <Link
         href="/resume"
-        className="group relative inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-sm text-[#00E676] hover:bg-[#00E676]/10 transition-colors duration-200"
+        className="group relative inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-sm text-[#ffffff] hover:bg-[#ffffff]/10 transition-colors duration-200"
       >
         <span
-          className="pointer-events-none absolute inset-0 rounded-sm border border-[#00E676]"
+          className="pointer-events-none absolute inset-0 rounded-sm border border-[#ffffff]"
           style={{
             transformOrigin: "right",
             transform: touchHovered ? "scaleX(0)" : "scaleX(1)",
@@ -29,13 +29,13 @@ export default function AboutCTA() {
       {/* Get in touch — border wipes left→right on hover */}
       <Link
         href="/contact"
-        className="relative inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-sm text-text-secondary hover:text-[#00E676] transition-colors duration-200"
+        className="relative inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-sm text-text-secondary hover:text-[#ffffff] transition-colors duration-200"
         onMouseEnter={() => setTouchHovered(true)}
         onMouseLeave={() => setTouchHovered(false)}
       >
         <span className="pointer-events-none absolute inset-0 rounded-sm border border-border-light" />
         <span
-          className="pointer-events-none absolute inset-0 rounded-sm border border-[#00E676]"
+          className="pointer-events-none absolute inset-0 rounded-sm border border-[#ffffff]"
           style={{
             transformOrigin: "left",
             transform: touchHovered ? "scaleX(1)" : "scaleX(0)",
@@ -47,3 +47,6 @@ export default function AboutCTA() {
     </div>
   );
 }
+
+
+

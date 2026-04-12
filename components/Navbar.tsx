@@ -39,7 +39,7 @@ export default function Navbar() {
         {/* Logo — arch-style prompt */}
         <Link
           href="/"
-          className="group font-mono text-lg font-bold text-[#00E676] hover:text-white transition-colors duration-150 tracking-tight flex items-center gap-1"
+          className="font-mono text-lg font-bold text-white transition-colors duration-150 tracking-tight"
         >
           secT
         </Link>
@@ -55,7 +55,7 @@ export default function Navbar() {
                   prefetch
                   className={`font-mono text-sm tracking-wide uppercase transition-colors duration-150 px-3 py-1.5 ${
                     isActive
-                      ? "text-[#00E676]"
+                      ? "text-white"
                       : "text-zinc-500 hover:text-zinc-200"
                   }`}
                 >
@@ -91,7 +91,7 @@ export default function Navbar() {
                   href={link.href}
                   prefetch
                   className={`block font-mono text-sm tracking-wide uppercase py-2.5 border-b border-zinc-800/40 last:border-none transition-colors duration-150 ${
-                    isActive ? "text-[#00E676]" : "text-zinc-500 hover:text-zinc-200"
+                    isActive ? "text-white" : "text-zinc-500 hover:text-zinc-200"
                   }`}
                 >
                   {link.label}

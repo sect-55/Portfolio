@@ -53,7 +53,7 @@ export default function PortfolioFeaturesFlow({ targetRef, onHoverChange }: Port
         <span
           className="inline-block w-1.5 h-1.5 rounded-full animate-pulse"
           style={{
-            backgroundColor: "#00E676",
+            backgroundColor: "#ffffff",
           }}
         />
         <span className="font-mono text-[10px] text-zinc-400 tracking-widest uppercase">
@@ -113,3 +113,6 @@ export default function PortfolioFeaturesFlow({ targetRef, onHoverChange }: Port
     </div>
   );
 }
+
+
+

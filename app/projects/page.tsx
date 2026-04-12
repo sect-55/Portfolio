@@ -20,7 +20,7 @@ function DecURLStructureModal({ onClose }: { onClose: () => void }) {
       >
         <div className="flex items-center justify-between mb-3">
           <p className="text-xs tracking-[0.3em] text-zinc-500 uppercase">DecURL — On-Chain Flow</p>
-          <button onClick={onClose} className="text-zinc-500 hover:text-[#00E676] transition-colors duration-150">
+          <button onClick={onClose} className="text-zinc-500 hover:text-[#0a0a0a] transition-colors duration-150">
             <X size={14} />
           </button>
         </div>
@@ -67,7 +67,7 @@ interface TLEvent { id: string; title: string; repo: string; commit_url: string 
 interface TLMeta { total: number; streak: number; }
 
 const TYPE_META: Record<EventType, { icon: string; color: string }> = {
-  build: { icon: "⬡", color: "#00E676" },
+  build: { icon: "⬡", color: "#0a0a0a" },
   fix: { icon: "◈", color: "#f87171" },
   launch: { icon: "◆", color: "#34d399" },
   update: { icon: "◇", color: "#60a5fa" },
@@ -89,11 +89,11 @@ function groupByDate(events: TLEvent[]) {
 type ContribDay = { date: string; contributionCount: number };
 
 function getColor(count: number): string {
-  if (count === 0) return "#161b22";
-  if (count <= 3)  return "#0e4429";
-  if (count <= 6)  return "#006d32";
-  if (count <= 9)  return "#26a641";
-  return "#39d353";
+  if (count === 0) return "#1a1a1a";
+  if (count <= 3)  return "#333333";
+  if (count <= 6)  return "#555555";
+  if (count <= 9)  return "#888888";
+  return "#cccccc";
 }
 
 function ContribHeatmap({ weeks, total }: { weeks: ContribDay[][]; total: number }) {
@@ -242,7 +242,7 @@ function GithubTimelineModal({ onClose }: { onClose: () => void }) {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 p-4 sm:p-5 border-b border-zinc-800 flex-shrink-0">
           <div>
-            <p className="font-mono text-xs text-[#00E676] tracking-[0.25em] uppercase mb-1">@{username}</p>
+            <p className="font-mono text-xs text-white tracking-[0.25em] uppercase">@{username}</p>
           </div>
           <div className="flex items-center gap-4 sm:gap-5">
             <div className="flex flex-col items-end gap-0.5">
@@ -303,7 +303,7 @@ function GithubTimelineModal({ onClose }: { onClose: () => void }) {
           ) : grouped.length === 0 ? (
             <div className="flex flex-col items-center gap-3 py-16 text-zinc-500 font-mono text-sm">
               <span>no events found</span>
-              {(activeType || activeRepo) && <button onClick={clear} className="text-[#00E676] text-xs underline">clear filters</button>}
+              {(activeType || activeRepo) && <button onClick={clear} className="text-[#0a0a0a] text-xs underline">clear filters</button>}
             </div>
           ) : (
             grouped.map(([date, dayEvents]) => (
@@ -331,7 +331,7 @@ function GithubTimelineModal({ onClose }: { onClose: () => void }) {
                         </div>
                         {ev.commit_url && (
                           <a href={ev.commit_url} target="_blank" rel="noopener noreferrer"
-                            className="text-sm text-zinc-600 hover:text-[#00E676] transition-colors shrink-0 self-center px-1" title="View commit">
+                            className="text-sm text-zinc-600 hover:text-[#0a0a0a] transition-colors shrink-0 self-center px-1" title="View commit">
                             ↗
                           </a>
                         )}
@@ -348,7 +348,7 @@ function GithubTimelineModal({ onClose }: { onClose: () => void }) {
         <div className="px-5 py-3 border-t border-zinc-800 flex-shrink-0">
           <span className="font-mono text-[11px] text-zinc-600">
             synced from github ·{" "}
-            <a href={`https://github.com/${username}`} target="_blank" rel="noopener noreferrer" className="hover:text-[#00E676] transition-colors">
+            <a href={`https://github.com/${username}`} target="_blank" rel="noopener noreferrer" className="hover:text-[#0a0a0a] transition-colors">
               @{username}
             </a>
           </span>
@@ -404,19 +404,19 @@ export default function ProjectsPage() {
           {/* Actively Building card */}
           <div
             ref={cardRef}
-            className={`border border-border bg-surface/30 rounded-sm p-5 transition-all duration-300 ${githubBtnHovered ? "" : "hover:border-[#00E676]/40 hover:bg-surface/70"}`}
+            className={`border border-border bg-surface/30 rounded-sm p-5 transition-all duration-300 ${githubBtnHovered ? "" : "hover:border-white/40 hover:bg-surface/70"}`}
             style={{animation:"fadeUp 0.6s ease forwards",opacity:0}}
           >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <span className="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                <span className="font-mono text-sm text-green-400 uppercase tracking-widest">Actively Building</span>
+                <span className="inline-block w-2 h-2 rounded-full bg-white animate-pulse" />
+                <span className="font-mono text-sm text-white uppercase tracking-widest">Actively Building</span>
               </div>
               <button
                 onClick={() => setGithubOpen(true)}
                 onMouseEnter={() => setGithubBtnHovered(true)}
                 onMouseLeave={() => setGithubBtnHovered(false)}
-                className="inline-flex items-center gap-2 border border-border-light text-text-secondary px-4 py-2 text-sm font-semibold rounded-sm hover:border-green-400 hover:text-green-400 transition-all duration-200"
+                className="inline-flex items-center gap-2 border border-border-light text-text-secondary px-4 py-2 text-sm font-semibold rounded-sm hover:border-white hover:text-white transition-all duration-200"
               >
                 <Github size={15} />
                 Detailed
@@ -449,19 +449,19 @@ export default function ProjectsPage() {
             <article
               key={project.id}
               style={{animation:"fadeUp 0.55s ease forwards",animationDelay:`${0.15 + i * 0.1}s`,opacity:0}}
-              className={`group border border-border bg-surface/30 rounded-sm p-6 transition-all duration-300 flex flex-col ${project.id === "decurl" && structureBtnHovered ? "" : "hover:border-[#00E676]/40 hover:bg-surface/70"}`}
+              className={`group border border-border bg-surface/30 rounded-sm p-6 transition-all duration-300 flex flex-col ${project.id === "decurl" && structureBtnHovered ? "" : "hover:border-white/40 hover:bg-surface/70"}`}
             >
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2">
                   {project.featured && (
-                    <span className="font-mono text-[10px] text-[#00E676] border border-[#00E676]/30 px-1.5 py-0.5 rounded-sm">featured</span>
+                    <span className="font-mono text-xs text-white border border-white/40 px-2 py-0.5 rounded-sm">featured</span>
                   )}
                   <span className="font-mono text-xs text-text-muted">{project.year}</span>
                 </div>
-                <span className="text-xs text-text-muted border border-border px-2 py-0.5 rounded-sm group-hover:text-[#00E676] group-hover:border-[#00E676]/50 transition-colors duration-300">{project.category}</span>
+                <span className="text-xs text-text-muted border border-border px-2 py-0.5 rounded-sm group-hover:text-white group-hover:border-white/50 transition-colors duration-300">{project.category}</span>
               </div>
               <div className="flex items-center gap-3 mb-3">
-                <h3 className="font-display text-2xl font-semibold text-text-primary group-hover:text-[#00E676] transition-colors">{project.title}</h3>
+                <h3 className="font-display text-2xl font-semibold text-text-primary group-hover:text-white transition-colors">{project.title}</h3>
                 {project.id === "decurl" && (
                   <button
                     onClick={() => setStructureOpen((v) => !v)}
@@ -485,13 +485,13 @@ export default function ProjectsPage() {
               <div className="flex items-center gap-4 pt-4 border-t border-border">
                 {project.github && (
                   <a href={project.github} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-xs text-text-secondary hover:text-[#00E676] transition-colors">
+                    className="flex items-center gap-1.5 text-xs text-text-secondary hover:text-white transition-colors">
                     <Github size={13} /> Code
                   </a>
                 )}
                 {project.live && (
                   <a href={project.live} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-xs text-text-secondary hover:text-[#00E676] transition-colors">
+                    className="flex items-center gap-1.5 text-xs text-text-secondary hover:text-white transition-colors">
                     <ExternalLink size={13} /> Live
                   </a>
                 )}
@@ -508,7 +508,7 @@ export default function ProjectsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               <article
                 style={{animation:"fadeUp 0.55s ease forwards",animationDelay:"0.25s",opacity:0}}
-                className="group border border-border bg-surface/30 rounded-sm p-6 transition-all duration-300 flex flex-col hover:border-[#00E676]/40 hover:bg-surface/70"
+                className="group border border-border bg-surface/30 rounded-sm p-6 transition-all duration-300 flex flex-col hover:border-white/40 hover:bg-surface/70"
               >
                 <div className="flex items-center justify-between mb-5">
                   <div className="flex items-center gap-2">
@@ -517,9 +517,9 @@ export default function ProjectsPage() {
                     )}
                     <span className="font-mono text-xs text-text-muted">{portfolio.year}</span>
                   </div>
-                  <span className="text-xs text-text-muted border border-border px-2 py-0.5 rounded-sm group-hover:text-[#00E676] group-hover:border-[#00E676]/50 transition-colors duration-300">{portfolio.category}</span>
+                  <span className="text-xs text-text-muted border border-border px-2 py-0.5 rounded-sm group-hover:text-white group-hover:border-white/50 transition-colors duration-300">{portfolio.category}</span>
                 </div>
-                <h3 className="font-display text-2xl font-semibold text-text-primary group-hover:text-[#00E676] transition-colors mb-3">{portfolio.title}</h3>
+                <h3 className="font-display text-2xl font-semibold text-text-primary group-hover:text-white transition-colors mb-3">{portfolio.title}</h3>
                 <p className="text-base text-text-muted leading-relaxed flex-1 mb-5">{portfolio.description}</p>
                 <div className="flex flex-wrap gap-1.5 mb-5">
                   {portfolio.tech.slice(0, 5).map((t) => (
@@ -532,13 +532,13 @@ export default function ProjectsPage() {
                 <div className="flex items-center gap-4 pt-4 border-t border-border">
                   {portfolio.github && (
                     <a href={portfolio.github} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-xs text-text-secondary hover:text-[#00E676] transition-colors">
+                      className="flex items-center gap-1.5 text-xs text-text-secondary hover:text-white transition-colors">
                       <Github size={13} /> Code
                     </a>
                   )}
                   {portfolio.live && (
                     <a href={portfolio.live} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-xs text-text-secondary hover:text-[#00E676] transition-colors">
+                      className="flex items-center gap-1.5 text-xs text-text-secondary hover:text-white transition-colors">
                       <ExternalLink size={13} /> Live
                     </a>
                   )}
@@ -551,12 +551,12 @@ export default function ProjectsPage() {
         {/* Footer CTA */}
         <div className="mt-16 border-t border-border pt-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4" style={{animation:"fadeUp 0.6s ease forwards",animationDelay:"0.35s",opacity:0}}>
           <div>
-            <p className="font-mono text-xs text-[#00E676] tracking-[0.25em] uppercase mb-1">Let&apos;s work together</p>
+            <p className="font-mono text-xs text-white tracking-[0.25em] uppercase mb-1">Let&apos;s work together</p>
             <p className="text-text-secondary text-sm">Have a project or opportunity in mind?</p>
           </div>
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-2 border border-border-light text-text-secondary px-6 py-3 text-sm font-semibold rounded-sm hover:border-[#00E676] hover:text-[#00E676] transition-all duration-200 self-start sm:self-auto"
+            className="group inline-flex items-center gap-2 border border-border-light text-text-secondary px-6 py-3 text-sm font-semibold rounded-sm hover:border-white hover:text-white transition-all duration-200 self-start sm:self-auto"
           >
             Contact <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-200" />
           </Link>
@@ -565,3 +565,5 @@ export default function ProjectsPage() {
     </div>
   );
 }
+
+

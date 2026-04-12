@@ -18,8 +18,6 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const fontshareUrl = "https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap";
-
 
 export const metadata: Metadata = {
   title: {
@@ -62,10 +60,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${jetbrainsMono.variable}`}>
-      <head>
-        <link rel="preconnect" href="https://api.fontshare.com" />
-        <link href={fontshareUrl} rel="stylesheet" />
-      </head>
       <body className="bg-bg text-text-primary font-body min-h-screen flex flex-col antialiased">
         {/* Global background — grid + ambient glow */}
         <div
@@ -76,7 +70,6 @@ export default function RootLayout({
             backgroundSize: "80px 80px",
           }}
         />
-        <div className="fixed top-1/4 right-1/4 w-[300px] h-[300px] md:w-[600px] md:h-[600px] rounded-full bg-[#00E676]/5 blur-[120px] pointer-events-none z-0" />
 
         <Navbar />
         <main className="flex-1 relative z-10">{children}</main>

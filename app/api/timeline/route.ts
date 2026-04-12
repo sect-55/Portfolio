@@ -166,3 +166,6 @@ export async function GET(req: Request) {
     return NextResponse.json({ data: [], meta: { total: 0, streak: 0 } });
   }
 }
+
+
+

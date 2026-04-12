@@ -352,3 +352,6 @@ export const ABOUT_HIGHLIGHTS = [
     value: "5M+",
   },
 ];
+
+
+

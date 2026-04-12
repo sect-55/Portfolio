@@ -434,7 +434,7 @@ export default function AIChatWidget() {
                 >
                   <path
                     d="M1 6.5H12M12 6.5L7 1.5M12 6.5L7 11.5"
-                    stroke={input.trim() && !isLoading ? "#080808" : "#555555"}
+                    stroke={input.trim() && !isLoading ? "#ffffff" : "#555555"}
                     strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -467,4 +467,7 @@ export default function AIChatWidget() {
     </>
   );
 }
+
+
+
 

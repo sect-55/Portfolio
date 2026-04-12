@@ -70,3 +70,6 @@ export async function GET() {
     return NextResponse.json({ weeks: [], total: 0 });
   }
 }
+
+
+

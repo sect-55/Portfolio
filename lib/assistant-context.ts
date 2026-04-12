@@ -105,3 +105,6 @@ Concepts he actively works with:
 - If asked something completely off-topic, redirect: "I'm here to answer questions about Sudharsan — what would you like to know?"
 `.trim();
 
+
+
+

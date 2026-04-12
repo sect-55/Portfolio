@@ -12,11 +12,11 @@ export default function HomeCTA({ resumeUrl }: { resumeUrl: string }) {
       {/* Hire me — border wipes right→left on resume hover */}
       <Link
         href="/contact"
-        className="group relative inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-sm text-[#00E676] hover:bg-[#00E676]/10 transition-colors duration-200"
+        className="group relative inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-sm text-[#ffffff] hover:bg-[#ffffff]/10 transition-colors duration-200"
       >
         {/* Animated border layer */}
         <span
-          className="pointer-events-none absolute inset-0 rounded-sm border border-[#00E676]"
+          className="pointer-events-none absolute inset-0 rounded-sm border border-[#ffffff]"
           style={{
             transformOrigin: "right",
             transform: resumeHovered ? "scaleX(0)" : "scaleX(1)",
@@ -32,7 +32,7 @@ export default function HomeCTA({ resumeUrl }: { resumeUrl: string }) {
         href={resumeUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="relative inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-sm text-text-secondary hover:text-[#00E676] transition-colors duration-200"
+        className="relative inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-sm text-text-secondary hover:text-[#ffffff] transition-colors duration-200"
         onMouseEnter={() => setResumeHovered(true)}
         onMouseLeave={() => setResumeHovered(false)}
       >
@@ -40,7 +40,7 @@ export default function HomeCTA({ resumeUrl }: { resumeUrl: string }) {
         <span className="pointer-events-none absolute inset-0 rounded-sm border border-border-light" />
         {/* Animated green border layer */}
         <span
-          className="pointer-events-none absolute inset-0 rounded-sm border border-[#00E676]"
+          className="pointer-events-none absolute inset-0 rounded-sm border border-[#ffffff]"
           style={{
             transformOrigin: "left",
             transform: resumeHovered ? "scaleX(1)" : "scaleX(0)",
@@ -53,3 +53,6 @@ export default function HomeCTA({ resumeUrl }: { resumeUrl: string }) {
     </div>
   );
 }
+
+
+
