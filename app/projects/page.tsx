@@ -101,12 +101,13 @@ function ContribHeatmap({ weeks, total }: { weeks: ContribDay[][]; total: number
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    setVisible(false);
     let raf1: number, raf2: number;
     raf1 = requestAnimationFrame(() => {
       raf2 = requestAnimationFrame(() => setVisible(true));
     });
     return () => { cancelAnimationFrame(raf1); cancelAnimationFrame(raf2); };
-  }, []);
+  }, [weeks]);
 
   const monthLabels = useMemo(() => {
     const labels: { label: string; col: number }[] = [];
@@ -555,9 +556,9 @@ export default function ProjectsPage() {
           </div>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 border border-border-light text-text-secondary px-6 py-3 text-sm font-semibold rounded-sm hover:border-[#00E676] hover:text-[#00E676] transition-all duration-200 self-start sm:self-auto"
+            className="group inline-flex items-center gap-2 border border-border-light text-text-secondary px-6 py-3 text-sm font-semibold rounded-sm hover:border-[#00E676] hover:text-[#00E676] transition-all duration-200 self-start sm:self-auto"
           >
-            Contact <ArrowRight size={14} />
+            Contact <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-200" />
           </Link>
         </div>
       </div>
