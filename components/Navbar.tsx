@@ -42,7 +42,6 @@ export default function Navbar() {
           className="group font-mono text-lg font-bold text-[#00E676] hover:text-white transition-colors duration-150 tracking-tight flex items-center gap-1"
         >
           secT
-          <span className="ml-0.5 animate-pulse text-zinc-600 group-hover:text-[#00E676] transition-colors duration-200">▮</span>
         </Link>
 
         {/* Desktop nav */}
