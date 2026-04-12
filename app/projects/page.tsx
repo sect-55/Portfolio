@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import Link from "next/link";
 import { Github, ExternalLink, X, ArrowRight, ChevronDown, ChevronUp } from "lucide-react";
 import { PROJECTS, SITE_CONFIG } from "@/lib/data";
@@ -98,16 +98,25 @@ function getColor(count: number): string {
 
 function ContribHeatmap({ weeks, total }: { weeks: ContribDay[][]; total: number }) {
   const recentWeeks = weeks.slice(-17);
+  const [visible, setVisible] = useState(false);
 
-  const monthLabels: { label: string; col: number }[] = [];
-  recentWeeks.forEach((week, wi) => {
-    const first = week[0];
-    if (!first) return;
-    const d = new Date(first.date + "T00:00:00Z");
-    if (d.getDate() <= 7) {
-      monthLabels.push({ label: d.toLocaleString("en-US", { month: "short", timeZone: "UTC" }), col: wi });
-    }
-  });
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 50);
+    return () => clearTimeout(t);
+  }, []);
+
+  const monthLabels = useMemo(() => {
+    const labels: { label: string; col: number }[] = [];
+    recentWeeks.forEach((week, wi) => {
+      const first = week[0];
+      if (!first) return;
+      const d = new Date(first.date + "T00:00:00Z");
+      if (d.getDate() <= 7) {
+        labels.push({ label: d.toLocaleString("en-US", { month: "short", timeZone: "UTC" }), col: wi });
+      }
+    });
+    return labels;
+  }, [recentWeeks]);
 
   return (
     <div>
@@ -127,26 +136,34 @@ function ContribHeatmap({ weeks, total }: { weeks: ContribDay[][]; total: number
         <div className="flex gap-[4px]">
           {recentWeeks.map((week, wi) => (
             <div key={wi} className="flex flex-col gap-[4px]">
-              {week.map((day) => (
+              {week.map((day, di) => (
                 <div
                   key={day.date}
                   title={`${day.date}: ${day.contributionCount} contributions`}
                   className="w-[16px] h-[16px] rounded-[3px] cursor-pointer hover:ring-1 hover:ring-white/30 transition-all"
-                  style={{ backgroundColor: getColor(day.contributionCount) }}
+                  style={{
+                    backgroundColor: getColor(day.contributionCount),
+                    opacity: visible ? 1 : 0,
+                    transform: visible ? "scale(1)" : "scale(0.5)",
+                    transition: `opacity 0.3s ease ${(di * 17 + wi) * 8}ms, transform 0.3s ease ${(di * 17 + wi) * 8}ms`,
+                  }}
                 />
               ))}
             </div>
           ))}
         </div>
         {/* Legend */}
-        <div className="flex items-center gap-1.5 mt-3 justify-end">
-          <span className="font-mono text-[9px] text-zinc-500">{total.toLocaleString()} this year</span>
-          <span className="mx-1 text-zinc-700 text-[9px]">·</span>
-          <span className="font-mono text-[9px] text-zinc-600">Less</span>
+        <div
+          className="flex items-center gap-2 mt-3 justify-end"
+          style={{ opacity: visible ? 1 : 0, transition: "opacity 0.5s ease 0.8s" }}
+        >
+          <span className="font-mono text-xs text-zinc-400">{total.toLocaleString()} this year</span>
+          <span className="text-zinc-600 text-xs">·</span>
+          <span className="font-mono text-xs text-zinc-500">Less</span>
           {[0, 3, 6, 9, 12].map((v) => (
-            <div key={v} className="w-[16px] h-[16px] rounded-[3px]" style={{ backgroundColor: getColor(v) }} />
+            <div key={v} className="w-[18px] h-[18px] rounded-[3px]" style={{ backgroundColor: getColor(v) }} />
           ))}
-          <span className="font-mono text-[9px] text-zinc-600">More</span>
+          <span className="font-mono text-xs text-zinc-500">More</span>
         </div>
       </div>
     </div>
@@ -347,13 +364,30 @@ export default function ProjectsPage() {
   const [structureBtnHovered, setStructureBtnHovered] = useState(false);
   const [contribWeeks, setContribWeeks] = useState<ContribDay[][]>([]);
   const [contribTotal, setContribTotal] = useState(0);
+  const [contribLoading, setContribLoading] = useState(false);
+  const [contribFetched, setContribFetched] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetch("/api/contributions")
-      .then((r) => r.json())
-      .then((d) => { setContribWeeks(d.weeks || []); setContribTotal(d.total || 0); })
-      .catch(() => {});
-  }, []);
+    const el = cardRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !contribFetched) {
+          setContribFetched(true);
+          setContribLoading(true);
+          fetch("/api/contributions")
+            .then((r) => r.json())
+            .then((d) => { setContribWeeks(d.weeks || []); setContribTotal(d.total || 0); })
+            .catch(() => {})
+            .finally(() => setContribLoading(false));
+        }
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [contribFetched]);
 
   return (
     <div className="pt-24 pb-20">
@@ -365,6 +399,7 @@ export default function ProjectsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-stretch mb-4 md:mb-6">
           {/* Actively Building card */}
           <div
+            ref={cardRef}
             className={`border border-border bg-surface/30 rounded-sm p-5 transition-all duration-300 ${githubBtnHovered ? "" : "hover:border-[#00E676]/40 hover:bg-surface/70"}`}
             style={{animation:"fadeUp 0.6s ease forwards",opacity:0}}
           >
@@ -383,11 +418,26 @@ export default function ProjectsPage() {
                 Detailed
               </button>
             </div>
-            {contribWeeks.length > 0 && (
-              <div className="border-t border-border pt-4">
+            <div className="border-t border-border pt-4">
+              {contribLoading && (
+                <div className="flex gap-[4px]">
+                  {Array.from({ length: 17 }).map((_, wi) => (
+                    <div key={wi} className="flex flex-col gap-[4px]">
+                      {Array.from({ length: 7 }).map((_, di) => (
+                        <div
+                          key={di}
+                          className="w-[16px] h-[16px] rounded-[3px] bg-zinc-800 animate-pulse"
+                          style={{ animationDelay: `${(wi * 7 + di) * 20}ms` }}
+                        />
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              )}
+              {!contribLoading && contribWeeks.length > 0 && (
                 <ContribHeatmap weeks={contribWeeks} total={contribTotal} />
-              </div>
-            )}
+              )}
+            </div>
           </div>
 
           {/* DecURL card */}
