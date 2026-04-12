@@ -52,13 +52,13 @@ export default function ContactPage() {
       <div className="max-w-5xl mx-auto px-6">
         {/* Header */}
         <div className="mb-10 sm:mb-16" style={{animation:"fadeUp 0.6s ease forwards",opacity:0}}>
-          <p className="font-mono text-xs text-[#00E676] tracking-[0.25em] uppercase mb-4">
+          <p className="font-mono text-sm text-[#00E676] tracking-[0.25em] uppercase mb-4">
             Contact
           </p>
-          <h1 className="font-display text-3xl sm:text-4xl md:text-6xl font-semibold text-text-primary leading-tight">
+          <h1 className="font-body text-3xl sm:text-4xl md:text-6xl font-bold text-text-primary leading-tight tracking-normal">
             Get in touch
           </h1>
-          <p className="text-text-muted text-sm mt-6 max-w-lg leading-relaxed">
+          <p className="text-text-muted text-base mt-6 max-w-lg leading-relaxed">
             Have a project in mind, a job opportunity, or just want to talk
             fullstack engineer? I&apos;m always happy to hear from people.
           </p>
@@ -73,10 +73,10 @@ export default function ContactPage() {
                   <Mail size={15} className="text-[#00E676]" />
                 </div>
                 <div>
-                  <p className="text-xs text-text-muted mb-0.5">Email</p>
+                  <p className="text-sm text-text-muted mb-0.5">Email</p>
                   <a
                     href={`mailto:${SITE_CONFIG.email}`}
-                    className="text-sm text-text-primary hover:text-[#00E676] transition-colors"
+                    className="text-base text-text-primary hover:text-[#00E676] transition-colors"
                   >
                     {SITE_CONFIG.email}
                   </a>
@@ -87,14 +87,14 @@ export default function ContactPage() {
                   <MapPin size={15} className="text-[#00E676]" />
                 </div>
                 <div>
-                  <p className="text-xs text-text-muted mb-0.5">Location</p>
-                  <p className="text-sm text-text-primary">{SITE_CONFIG.location}</p>
+                  <p className="text-sm text-text-muted mb-0.5">Location</p>
+                  <p className="text-base text-text-primary">{SITE_CONFIG.location}</p>
                 </div>
               </div>
             </div>
 
             <div className="border-t border-border pt-8">
-              <p className="font-mono text-xs text-text-muted uppercase tracking-widest mb-5">
+              <p className="font-mono text-sm text-text-muted uppercase tracking-widest mb-5">
                 Social
               </p>
               <div className="flex gap-4">
@@ -119,8 +119,8 @@ export default function ContactPage() {
             </div>
 
             <div className="mt-10 border border-border bg-surface/30 rounded-sm p-6" style={{animation:"fadeUp 0.5s ease forwards",animationDelay:"0.4s",opacity:0}}>
-              <p className="font-mono text-xs text-[#00E676] mb-2">Availability</p>
-              <p className="text-sm text-text-muted leading-relaxed">
+              <p className="font-mono text-sm text-[#00E676] mb-2">Availability</p>
+              <p className="text-base text-text-muted leading-relaxed">
                 Currently open to full-time backend / systems roles and
                 fast-paced, real-world building environments.
               </p>

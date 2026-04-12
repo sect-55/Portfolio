@@ -18,10 +18,10 @@ export default function HomePage() {
         {/* Text */}
         <div className="stagger-children">
           <HeroText fullName={SITE_CONFIG.fullName} />
-          <p className="font-display text-xl md:text-2xl text-text-secondary italic mb-4 leading-snug">
+          <p className="font-display text-2xl md:text-3xl text-text-secondary italic mb-4 leading-snug">
             # {SITE_CONFIG.title}
           </p>
-          <p className="text-text-secondary text-base leading-relaxed max-w-md mb-6">
+          <p className="text-text-secondary text-lg leading-relaxed max-w-md mb-6">
             {SITE_CONFIG.tagline}
           </p>
           <HomeCTA resumeUrl={SITE_CONFIG.resumeUrl} />
@@ -48,7 +48,7 @@ export default function HomePage() {
         </div>
 
         {/* Architecture Graph */}
-        <div className="hidden md:flex justify-center">
+        <div className="hidden md:flex justify-center mt-8">
           <ArchitectureGraph />
         </div>
       </div>

@@ -17,7 +17,7 @@ export default function AboutPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="mb-8" style={{animation:"fadeUp 0.6s ease forwards",opacity:0}}>
-          <p className="font-mono text-xs text-[#00E676] tracking-[0.25em] uppercase mb-4">
+          <p className="font-mono text-sm text-[#00E676] tracking-[0.25em] uppercase mb-4">
             About me
           </p>
           <h1 className="font-display text-3xl sm:text-4xl md:text-6xl font-semibold text-text-primary leading-tight">
@@ -54,14 +54,14 @@ export default function AboutPage() {
           </div>
 
           <aside className="border border-border rounded-sm p-6 bg-surface/30" style={{animation:"fadeUp 0.6s ease forwards",animationDelay:"0.3s",opacity:0}}>
-            <p className="font-mono text-xs text-text-muted uppercase tracking-widest mb-5">
+            <p className="font-mono text-sm text-text-muted uppercase tracking-widest mb-5">
               Technical Skills
             </p>
             <div className="flex flex-wrap gap-2">
               {conciseSkills.map((skill, i) => (
                 <span
                   key={skill.name}
-                  className="font-mono text-xs text-text-secondary border border-border px-3 py-1.5 rounded-sm hover:border-[#00E676]/40 hover:text-[#00E676] hover:scale-105 transition-all cursor-default"
+                  className="font-mono text-sm text-text-secondary border border-border px-3 py-1.5 rounded-sm hover:border-[#00E676]/40 hover:text-[#00E676] hover:scale-105 transition-all cursor-default"
                   style={{animation:"fadeUp 0.4s ease forwards",animationDelay:`${0.35 + i * 0.04}s`,opacity:0}}
                 >
                   {skill.name}

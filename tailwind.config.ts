@@ -21,10 +21,10 @@ const config: Config = {
         "accent-glow": "rgba(201,169,110,0.15)",
       },
       fontFamily: {
-        display: ["var(--font-display)", "Georgia", "serif"],
-        ui: ["var(--font-ui)", "system-ui", "sans-serif"],
-        body: ["var(--font-body)", "system-ui", "sans-serif"],
-        mono: ["var(--font-mono)", "monospace"],
+        display: ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "sans-serif"],
+        ui: ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "sans-serif"],
+        body: ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "sans-serif"],
+        mono: ["var(--font-mono)", "JetBrains Mono", "monospace"],
       },
       animation: {
         "fade-up": "fadeUp 0.7s ease forwards",

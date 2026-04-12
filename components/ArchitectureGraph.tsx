@@ -30,7 +30,7 @@ export default function ArchitectureGraph() {
 
       {/* Tree-like Code Representation - hidden when Features hovered */}
       <div ref={requestFlowRef} className="relative mb-3">
-        <div className={`bg-zinc-900/50 border border-zinc-800 rounded-lg p-2 font-mono text-[10px] sm:text-xs transition-opacity duration-200 ${featuresHovered ? "opacity-0" : "opacity-100"}`}>
+        <div className={`bg-zinc-900/50 border border-zinc-800 rounded-lg p-2 font-mono text-[11px] sm:text-sm transition-opacity duration-200 ${featuresHovered ? "opacity-0" : "opacity-100"}`}>
           <div className="text-zinc-500 mb-1">// Complete Request Flow</div>
           <div className="space-y-1">
             {[

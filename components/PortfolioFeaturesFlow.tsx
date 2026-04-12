@@ -36,6 +36,7 @@ export default function PortfolioFeaturesFlow({ targetRef, onHoverChange }: Port
     { name: "GitHub", method: "timeline()", color: "#fbbf24" },
     { name: "SSE", method: "stream()", color: "#a78bfa" },
     { name: "Classifier", method: "parse()", color: "#34d399" },
+    { name: "Optimizer", method: "minify()", color: "#fb923c" },
     { name: "Vercel", method: "deploy()", color: "#f472b6" },
     { name: "EdgeRuntime", method: "cache()", color: "#22d3ee" },
   ]; 
@@ -72,7 +73,7 @@ export default function PortfolioFeaturesFlow({ targetRef, onHoverChange }: Port
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <div className="p-2 font-mono text-[10px] sm:text-xs">
+          <div className="p-2 font-mono text-[11px] sm:text-sm">
             <div className="text-zinc-500 mb-2">// Portfolio Features Flow</div>
 
             <div className="text-zinc-300 mb-1" style={{animation:"fadeUp 0.25s ease forwards",animationDelay:"0s",opacity:0}}>
@@ -97,8 +98,11 @@ export default function PortfolioFeaturesFlow({ targetRef, onHoverChange }: Port
                 { cls: "text-zinc-500 ml-6 sm:ml-12", content: "├─→" },
                 { cls: "text-zinc-300 ml-8 sm:ml-16", content: <><span style={{color:features[3].color}}>{features[3].name}</span><span className="text-zinc-500">.</span><span className="text-green-400">{features[3].method.replace("()","")}</span><span className="text-zinc-500">()</span></> },
                 { cls: "text-zinc-500 ml-8 sm:ml-16", content: "│" },
-                { cls: "text-zinc-500 ml-8 sm:ml-16", content: "└─→" },
+                { cls: "text-zinc-500 ml-8 sm:ml-16", content: "├─→" },
                 { cls: "text-zinc-300 ml-10 sm:ml-20", content: <><span style={{color:features[4].color}}>{features[4].name}</span><span className="text-zinc-500">.</span><span className="text-green-400">{features[4].method.replace("()","")}</span><span className="text-zinc-500">()</span></> },
+                { cls: "text-zinc-500 ml-10 sm:ml-20", content: "│" },
+                { cls: "text-zinc-500 ml-10 sm:ml-20", content: "└─→" },
+                { cls: "text-zinc-300 ml-12 sm:ml-24", content: <><span style={{color:features[5].color}}>{features[5].name}</span><span className="text-zinc-500">.</span><span className="text-green-400">{features[5].method.replace("()","")}</span><span className="text-zinc-500">()</span></> },
               ].map((row, i) => (
                 <div key={i} className={row.cls} style={{animation:"fadeUp 0.25s ease forwards",animationDelay:`${0.05 + i * 0.07}s`,opacity:0}}>{row.content}</div>
               ))}

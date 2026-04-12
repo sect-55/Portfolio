@@ -11,11 +11,15 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  const disableShrink = pathname === "/contact";
+
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => setScrolled(window.scrollY > 80);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const isShrunk = scrolled && !disableShrink;
 
   useEffect(() => { setMobileOpen(false); }, [pathname]);
 
@@ -27,79 +31,77 @@ export default function Navbar() {
 
   return (
     <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-bg/90 backdrop-blur-md border-b border-border"
-            : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl border-b border-zinc-800/50 transition-all duration-300 ${
+        scrolled ? "bg-[#0a0a0a]/75" : "bg-[#0a0a0a]/50"
+      }`}
+    >
+      <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        {/* Logo — arch-style prompt */}
+        <Link
+          href="/"
+          className="group font-mono text-lg font-bold text-[#00E676] hover:text-white transition-colors duration-150 tracking-tight flex items-center gap-1"
+        >
+          secT
+          <span className="ml-0.5 animate-pulse text-zinc-600 group-hover:text-[#00E676] transition-colors duration-200">▮</span>
+        </Link>
+
+        {/* Desktop nav */}
+        <ul className="hidden md:flex items-center gap-2">
+          {NAV_LINKS.map((link) => {
+            const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+            return (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  prefetch
+                  className={`font-mono text-sm tracking-wide uppercase transition-colors duration-150 px-3 py-1.5 ${
+                    isActive
+                      ? "text-[#00E676]"
+                      : "text-zinc-500 hover:text-zinc-200"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+
+        {/* Mobile toggle */}
+        <button
+          className="md:hidden font-mono text-base text-zinc-500 hover:text-[#00E676] transition-colors"
+          onClick={() => setMobileOpen((prev) => !prev)}
+          aria-label="Toggle menu"
+        >
+          {mobileOpen ? "[ close ]" : "[ menu ]"}
+        </button>
+      </nav>
+
+      {/* Mobile menu */}
+      <div
+        className={`md:hidden overflow-hidden transition-all duration-200 border-t border-zinc-800/60 ${
+          mobileOpen ? "max-h-64 bg-[#0a0a0a]" : "max-h-0"
         }`}
       >
-        <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <Link
-            href="/"
-            className="font-display text-3xl md:text-4xl font-semibold tracking-wide text-text-primary hover:text-[#00E676] transition-colors duration-300 group"
-          >
-            secT<span className="text-[#00E676] group-hover:text-white transition-colors duration-300">.</span>
-          </Link>
-
-          {/* Desktop nav */}
-          <ul className="hidden md:flex items-center gap-1">
-            {NAV_LINKS.map((link) => {
-              const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
-              return (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    prefetch
-                    className={`relative px-3 py-1.5 text-base font-ui font-medium transition-all duration-200 rounded-sm group ${
-                      isActive ? "text-[#00E676]" : "text-text-secondary hover:text-text-primary"
-                    }`}
-                  >
-                    <span className={`absolute bottom-0 left-3 right-3 h-px bg-[#00E676] transition-all duration-300 ${
-                      isActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0 group-hover:opacity-40 group-hover:scale-x-100"
-                    }`} style={{transformOrigin:"left"}} />
-                    {link.label}
-                  </Link>
-                </li>
-              );
-            })}
-
-          </ul>
-
-          {/* Mobile toggle */}
-          <button
-            className="md:hidden text-text-secondary hover:text-text-primary transition-colors"
-            onClick={() => setMobileOpen((prev) => !prev)}
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
-        </nav>
-
-        {/* Mobile menu */}
-        <div
-          className={`md:hidden overflow-hidden transition-all duration-300 border-b border-border ${
-            mobileOpen ? "max-h-96 bg-bg/95 backdrop-blur-md" : "max-h-0"
-          }`}
-        >
-          <ul className="px-6 py-4 flex flex-col gap-1">
-            {NAV_LINKS.map((link) => {
-              const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
-              return (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    prefetch
-                    className={`block py-2.5 text-base font-ui font-medium border-b border-border/50 last:border-none transition-colors duration-200 ${
-                      isActive ? "text-[#00E676]" : "text-text-secondary hover:text-text-primary"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </header>
+        <ul className="px-6 py-3 flex flex-col gap-0.5">
+          {NAV_LINKS.map((link) => {
+            const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+            return (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  prefetch
+                  className={`block font-mono text-sm tracking-wide uppercase py-2.5 border-b border-zinc-800/40 last:border-none transition-colors duration-150 ${
+                    isActive ? "text-[#00E676]" : "text-zinc-500 hover:text-zinc-200"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </header>
   );
 }
