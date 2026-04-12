@@ -8,7 +8,7 @@ export interface Project {
   live?: string;
   featured: boolean;
   year: number;
-  category: "platform" | "backend" | "frontend" | "devtools" | "other";
+  category: "platform" | "backend" | "frontend" | "devtools" | "other" | "web3";
 }
 
 export interface BlogPost {

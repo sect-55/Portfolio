@@ -72,15 +72,18 @@ export const EXPERIENCES: Experience[] = [
 
 export const PROJECTS: Project[] = [
   {
-    id: "url-shortener",
-    title: "URL Shortener",
+    id: "decurl",
+    title: "DecURL",
     description:
-      "A full-stack URL shortening system enabling custom links, randomized generation, and expiration-based routing, built with a MERN architecture and deployed for real-world usage.",
-    tech: ["React", "Node.js", "MongoDB", "Express"],
-    github: "https://github.com/sect-55/URL-shortner",
+      "A decentralized, censorship-resistant URL shortener with immutable short links stored on-chain (Sepolia/Polygon) and IPFS-backed via Pinata.",
+    longDescription:
+      "DecURL lets users create permanent short links that nobody can edit or delete. URLs are pinned to IPFS through Pinata and their CIDs are recorded in a Solidity smart contract. The Next.js frontend handles link creation and a server-side API route resolves codes by reading the contract, fetching the CID from IPFS, and issuing a 302 redirect. Gas cost per link is ~$0.001 on Polygon mainnet.",
+    tech: ["Next.js", "Solidity", "Ethers.js", "IPFS", "Pinata", "Hardhat"],
+    github: "https://github.com/sect-55/D-url",
+    live: "https://d-url.vercel.app",
     featured: true,
     year: 2026,
-    category: "backend",
+    category: "web3",
   },
   {
     id: "platform-hub",

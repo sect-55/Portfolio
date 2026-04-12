@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { Github, ExternalLink, X, ArrowRight, ChevronDown, ChevronUp } from "lucide-react";
-import { PROJECTS, SITE_CONFIG, SKILLS } from "@/lib/data";
+import { PROJECTS, SITE_CONFIG } from "@/lib/data";
 
 // ─── URL Shortener Structure Modal ───────────────────────────────────────────
 
@@ -267,7 +267,6 @@ function GithubTimelineModal({ onClose }: { onClose: () => void }) {
 
 export default function ProjectsPage() {
   const projects = PROJECTS.slice(0, 2);
-  const stack = Array.from(new Set(SKILLS.map((s) => s.name))).slice(0, 10);
   const [structureOpen, setStructureOpen] = useState(false);
   const [githubOpen, setGithubOpen] = useState(false);
   const [githubBtnHovered, setGithubBtnHovered] = useState(false);
@@ -295,17 +294,6 @@ export default function ProjectsPage() {
               <Github size={18} />
               Github Timeline
             </button>
-          </div>
-
-          <h3 className="font-display text-2xl font-semibold text-text-primary mb-3">More in progress</h3>
-          <p className="text-base text-text-muted leading-relaxed mb-5 max-w-xl">
-            Always shipping. Check the GitHub for what&apos;s live, half-built, or being quietly rewritten.
-          </p>
-
-          <div className="flex flex-wrap gap-1.5">
-            {stack.map((skill) => (
-              <span key={skill} className="font-mono text-xs text-text-muted bg-border/50 px-2 py-0.5 rounded-sm">{skill}</span>
-            ))}
           </div>
         </div>
 
