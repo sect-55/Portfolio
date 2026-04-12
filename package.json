@@ -10,24 +10,30 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.86.1",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
+    "@types/matter-js": "^0.20.2",
+    "3dsvg": "^0.2.1",
     "framer-motion": "^11.3.19",
     "lucide-react": "^0.414.0",
+    "matter-js": "^0.20.0",
     "next": "14.2.5",
     "nodemailer": "^6.9.14",
     "react": "^18",
     "react-dom": "^18",
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "three": "^0.183.2"
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.15",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/nodemailer": "^6.4.15",
     "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.5"
+    "typescript": "^5"
   }
 }

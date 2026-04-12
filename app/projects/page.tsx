@@ -5,9 +5,9 @@ import Link from "next/link";
 import { Github, ExternalLink, X, ArrowRight, ChevronDown, ChevronUp } from "lucide-react";
 import { PROJECTS, SITE_CONFIG } from "@/lib/data";
 
-// ─── URL Shortener Structure Modal ───────────────────────────────────────────
+// ─── DecURL Structure Modal ──────────────────────────────────────────────────
 
-function URLShortenerStructureModal({ onClose }: { onClose: () => void }) {
+function DecURLStructureModal({ onClose }: { onClose: () => void }) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-6"
@@ -19,35 +19,36 @@ function URLShortenerStructureModal({ onClose }: { onClose: () => void }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-3">
-          <p className="text-xs tracking-[0.3em] text-zinc-500 uppercase">URL Shortener</p>
+          <p className="text-xs tracking-[0.3em] text-zinc-500 uppercase">DecURL — On-Chain Flow</p>
           <button onClick={onClose} className="text-zinc-500 hover:text-[#00E676] transition-colors duration-150">
             <X size={14} />
           </button>
         </div>
         <div className="border-t border-zinc-800 pt-3">
           <div className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-3 font-mono text-xs overflow-x-auto">
-            <div className="text-zinc-500 mb-2">// Request Flow</div>
+            <div className="text-zinc-500 mb-2">// Create &amp; Resolve Flow</div>
             <div className="space-y-1 pb-2">
               {[
-                { cls: "", content: <><span className="text-blue-400">Client</span><span className="text-zinc-500">.</span><span className="text-green-400">POST</span><span className="text-zinc-500">(&quot;/shorten&quot;)</span></> },
+                { cls: "", content: <><span className="text-blue-400">User</span><span className="text-zinc-500">.</span><span className="text-green-400">submit</span><span className="text-zinc-500">(url, code)</span></> },
                 { cls: "text-zinc-500 ml-4", content: "│" },
                 { cls: "text-zinc-500 ml-4", content: "├─→" },
-                { cls: "ml-8", content: <><span className="text-blue-400">Express</span><span className="text-zinc-500">.</span><span className="text-green-400">router</span><span className="text-zinc-500">()</span></> },
+                { cls: "ml-8", content: <><span className="text-orange-400">Pinata</span><span className="text-zinc-500">.</span><span className="text-green-400">uploadToIPFS</span><span className="text-zinc-500">(url)</span></> },
                 { cls: "text-zinc-500 ml-12", content: "│" },
                 { cls: "text-zinc-500 ml-12", content: "├─→" },
-                { cls: "ml-16", content: <><span className="text-orange-400">Validator</span><span className="text-zinc-500">.</span><span className="text-green-400">checkURL</span><span className="text-zinc-500">()</span></> },
+                { cls: "ml-16", content: <><span className="text-purple-400">Contract</span><span className="text-zinc-500">.</span><span className="text-green-400">create</span><span className="text-zinc-500">(code, cid)</span></> },
                 { cls: "text-zinc-500 ml-20", content: "│" },
-                { cls: "text-zinc-500 ml-20", content: "├─→" },
-                { cls: "ml-24", content: <><span className="text-orange-400">MongoDB</span><span className="text-zinc-500">.</span><span className="text-green-400">store</span><span className="text-zinc-500">{"({ slug, url })"}</span></> },
-                { cls: "text-zinc-500 ml-28", content: "│" },
-                { cls: "text-zinc-500 ml-28", content: "├─→" },
-                { cls: "ml-32", content: <><span className="text-blue-400">Client</span><span className="text-zinc-500">.</span><span className="text-green-400">GET</span><span className="text-zinc-500">{"(/:slug)"}</span></> },
-                { cls: "text-zinc-500 ml-36", content: "│" },
-                { cls: "text-zinc-500 ml-36", content: "├─→" },
-                { cls: "ml-40", content: <><span className="text-orange-400">MongoDB</span><span className="text-zinc-500">.</span><span className="text-green-400">lookup</span><span className="text-zinc-500">(slug)</span></> },
+                { cls: "text-zinc-500 ml-20", content: "│   on-chain · immutable" },
+                { cls: "text-zinc-500 ml-20", content: "│" },
+                { cls: "text-zinc-500 ml-20", content: "└─→  resolve /r/code" },
+                { cls: "text-zinc-500 ml-24", content: "│" },
+                { cls: "text-zinc-500 ml-24", content: "├─→" },
+                { cls: "ml-28", content: <><span className="text-purple-400">Contract</span><span className="text-zinc-500">.</span><span className="text-green-400">get</span><span className="text-zinc-500">(code) → cid</span></> },
+                { cls: "text-zinc-500 ml-32", content: "│" },
+                { cls: "text-zinc-500 ml-32", content: "├─→" },
+                { cls: "ml-36", content: <><span className="text-orange-400">IPFS</span><span className="text-zinc-500">.</span><span className="text-green-400">resolve</span><span className="text-zinc-500">(cid) → url</span></> },
                 { cls: "text-zinc-500 ml-40", content: "│" },
                 { cls: "text-zinc-500 ml-40", content: "└─→" },
-                { cls: "ml-44", content: <><span className="text-green-400">Response</span><span className="text-zinc-500">.</span><span className="text-green-400">redirect</span><span className="text-zinc-500">(301)</span></> },
+                { cls: "ml-44", content: <><span className="text-green-400">Response</span><span className="text-zinc-500">.</span><span className="text-green-400">redirect</span><span className="text-zinc-500">(302)</span></> },
               ].map((row, i) => (
                 <div key={i} className={row.cls} style={{animation:"fadeUp 0.25s ease forwards",animationDelay:`${0.05 + i * 0.07}s`,opacity:0}}>{row.content}</div>
               ))}
@@ -274,7 +275,7 @@ export default function ProjectsPage() {
 
   return (
     <div className="pt-24 pb-20">
-      {structureOpen && <URLShortenerStructureModal onClose={() => setStructureOpen(false)} />}
+      {structureOpen && <DecURLStructureModal onClose={() => setStructureOpen(false)} />}
       {githubOpen && <GithubTimelineModal onClose={() => setGithubOpen(false)} />}
 
       <div className="max-w-6xl mx-auto px-6">
@@ -303,7 +304,7 @@ export default function ProjectsPage() {
             <article
               key={project.id}
               style={{animation:"fadeUp 0.55s ease forwards",animationDelay:`${0.15 + i * 0.1}s`,opacity:0}}
-              className={`group border border-border bg-surface/30 rounded-sm p-6 transition-all duration-300 flex flex-col ${project.id === "url-shortener" && structureBtnHovered ? "" : "hover:border-[#00E676]/40 hover:bg-surface/70"}`}
+              className={`group border border-border bg-surface/30 rounded-sm p-6 transition-all duration-300 flex flex-col ${project.id === "decurl" && structureBtnHovered ? "" : "hover:border-[#00E676]/40 hover:bg-surface/70"}`}
             >
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2">
@@ -312,21 +313,21 @@ export default function ProjectsPage() {
                   )}
                   <span className="font-mono text-xs text-text-muted">{project.year}</span>
                 </div>
-                <span className="text-xs text-text-muted border border-border px-2 py-0.5 rounded-sm">{project.category}</span>
+                <span className="text-xs text-text-muted border border-border px-2 py-0.5 rounded-sm group-hover:text-[#00E676] group-hover:border-[#00E676]/50 transition-colors duration-300">{project.category}</span>
               </div>
 
               <div className="flex items-center gap-3 mb-3">
                 <h3 className="font-display text-2xl font-semibold text-text-primary group-hover:text-[#00E676] transition-colors">
                   {project.title}
                 </h3>
-                {project.id === "url-shortener" && (
+                {project.id === "decurl" && (
                   <button
                     onClick={() => setStructureOpen((v) => !v)}
                     onMouseEnter={() => setStructureBtnHovered(true)}
                     onMouseLeave={() => setStructureBtnHovered(false)}
                     className="shrink-0 font-mono text-[10px] border border-blue-500 text-blue-400 px-2 py-0.5 rounded-sm"
                   >
-                    Show Structure
+                    Structure
                   </button>
                 )}
               </div>
