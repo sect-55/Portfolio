@@ -10,10 +10,9 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.86.1",
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.5.0",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
     "@types/matter-js": "^0.20.2",
-    "3dsvg": "^0.2.1",
     "framer-motion": "^11.3.19",
     "lucide-react": "^0.414.0",
     "matter-js": "^0.20.0",
@@ -22,7 +21,7 @@
     "react": "^18",
     "react-dom": "^18",
     "sharp": "^0.34.5",
-    "three": "^0.183.2"
+    "three": "^0.169.0"
   },
   "devDependencies": {
     "@types/node": "^20",
