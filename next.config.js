@@ -1,6 +1,7 @@
 const path = require("path");
 
 module.exports = {
+  serverExternalPackages: ["react-pdf", "pdfjs-dist"],
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "assets.aceternity.com" }, // Aceternity Avatar
