@@ -15,6 +15,7 @@ export function PdfViewerWrapper({ url }: { url: string }) {
       initial={{ opacity: 0, y: 28, scale: 0.97 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={SPRING_CONFIG}
+      className="overflow-hidden rounded-lg bg-white dark:bg-neutral-900"
     >
       <PdfViewer url={url} />
     </motion.div>

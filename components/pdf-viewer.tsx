@@ -69,7 +69,7 @@ export const PdfViewer = ({ url }: { url: string }) => {
             width={width}
             renderTextLayer={true}
             renderAnnotationLayer={true}
-            className="w-full dark:invert dark:hue-rotate-180"
+            className="w-full dark:[filter:invert(1)_hue-rotate(180deg)_contrast(0.82)]"
           />
         ))}
       </Document>
