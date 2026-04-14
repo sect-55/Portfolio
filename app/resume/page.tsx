@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Container from "@/components/container";
 import { DottedSeparator } from "@/components/separator";
-import { PdfViewer } from "@/components/pdf-viewer";
+import { PdfViewerWrapper } from "@/components/pdf-viewer-wrapper";
 
 export const metadata: Metadata = {
   title: "Resume",
@@ -20,7 +20,7 @@ export default async function ResumePage() {
       <Container className="min-h-screen">
         <div className="relative mt-6">
           <div className="overflow-hidden rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900">
-            <PdfViewer url={PDF_URL} />
+            <PdfViewerWrapper url={PDF_URL} />
           </div>
           <a
             href="/api/resume-download"
