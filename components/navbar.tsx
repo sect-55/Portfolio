@@ -15,6 +15,7 @@ const links = [
   { title: "Home", href: "/" },
   { title: "Resume", href: "/resume" },
   { title: "Favorites", href: "/inspiration" },
+  { title: "Contact", href: "/contact" },
 ];
 
 export const Navbar = () => {
