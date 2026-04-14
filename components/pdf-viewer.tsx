@@ -4,13 +4,33 @@ import { useState, useRef, useEffect } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
+import { getPdfBlobUrl, prefetchPdf } from "@/lib/pdf-cache";
 
 pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
 export const PdfViewer = ({ url }: { url: string }) => {
   const [numPages, setNumPages] = useState<number>(0);
   const [width, setWidth] = useState<number>(700);
+  const [pdfUrl, setPdfUrl] = useState<string>(() => getPdfBlobUrl() ?? url);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const cached = getPdfBlobUrl();
+    if (cached) {
+      setPdfUrl(cached);
+      return;
+    }
+    // Start fetching if not already in progress, then poll until ready
+    prefetchPdf();
+    const interval = setInterval(() => {
+      const ready = getPdfBlobUrl();
+      if (ready) {
+        setPdfUrl(ready);
+        clearInterval(interval);
+      }
+    }, 200);
+    return () => clearInterval(interval);
+  }, [url]);
 
   useEffect(() => {
     const updateWidth = () => {
@@ -27,7 +47,7 @@ export const PdfViewer = ({ url }: { url: string }) => {
   return (
     <div ref={containerRef} className="w-full">
       <Document
-        file={url}
+        file={pdfUrl}
         externalLinkTarget="_blank"
         onLoadSuccess={({ numPages }) => setNumPages(numPages)}
         loading={

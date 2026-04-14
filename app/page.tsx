@@ -5,6 +5,7 @@ import { Work } from "@/components/work";
 import { DottedSeparator } from "@/components/separator";
 import { Companies } from "@/components/companies";
 import { WorkWithMe } from "@/components/work-with-me";
+import { PdfPrefetcher } from "@/components/pdf-prefetcher";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
 export default async function Home() {
   return (
     <Container>
+      <PdfPrefetcher />
       <Header />
       <DottedSeparator className="my-6" />
       <Work />

@@ -13,6 +13,9 @@ type Week = {
   contributionDays: ContributionDay[];
 };
 
+type GithubCache = { weeks: Week[]; total: number } | null;
+let githubCache: GithubCache = null;
+
 const CELL = "size-[18px] rounded-[4px]";
 const GAP = "gap-[4px]";
 
@@ -59,14 +62,23 @@ export const WorkWithMe = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    if (githubCache) {
+      setWeeks(githubCache.weeks);
+      setTotal(githubCache.total);
+      setLoading(false);
+      return;
+    }
     fetch("/api/github-contributions")
       .then((r) => r.json())
       .then((data) => {
         if (data.error) {
           setError(typeof data.error === "string" ? data.error : JSON.stringify(data.error));
         } else {
-          setWeeks(data.weeks ?? []);
-          setTotal(data.totalContributions ?? 0);
+          const weeks = data.weeks ?? [];
+          const total = data.totalContributions ?? 0;
+          githubCache = { weeks, total };
+          setWeeks(weeks);
+          setTotal(total);
         }
         setLoading(false);
       })

@@ -1,6 +1,8 @@
+"use client";
+
 import React from "react";
-import Link from "next/link";
 import { Subheading } from "./subheading";
+import { LinkPreview } from "./link-preview";
 
 const workItems = [
   {
@@ -18,13 +20,16 @@ export const Work = () => {
       <Subheading>Projects</Subheading>
       <div className="mt-4 flex flex-col gap-6">
         {workItems.map((item) => (
-          <Link
+          <div
             key={item.title}
-            href={item.href}
-            target="_blank"
-            className="flex flex-col gap-2"
+            className="flex flex-col gap-2 cursor-pointer"
+            onClick={() => window.open(item.href, "_blank")}
           >
-            <p className="text-foreground text-base font-medium hover:underline">{item.title}</p>
+            <span onClick={(e) => e.stopPropagation()}>
+              <LinkPreview url={item.href}>
+                <span className="text-foreground text-base font-medium">{item.title}</span>
+              </LinkPreview>
+            </span>
             <p className="text-foreground/70 text-base text-pretty">{item.description}</p>
             {item.tags && (
               <div className="flex flex-wrap gap-2">
@@ -35,7 +40,7 @@ export const Work = () => {
                 ))}
               </div>
             )}
-          </Link>
+          </div>
         ))}
       </div>
     </div>
