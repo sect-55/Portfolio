@@ -18,11 +18,14 @@ export const Header = () => {
         making things easier to work with for other developers.
       </div>
       <div className="text-foreground pt-4 text-base">
-        I'm mostly active on{" "}
+        I&apos;m mostly active on{" "}
         <LinkPreview url="https://x.com/sect_55">
           X / Twitter
         </LinkPreview>{" "}
-        where I share everything.
+        where I share everything.{" "}And{" "}
+        <LinkPreview url="https://www.linkedin.com/in/sect55/">
+          LinkedIn
+        </LinkPreview>.
       </div>
     </div>
   );

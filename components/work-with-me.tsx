@@ -1,7 +1,35 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { Subheading } from "./subheading";
+
+function HeatCell({ day }: { day: ContributionDay }) {
+  const [hovered, setHovered] = useState(false);
+  const textColor = LEVEL_TEXT[day.contributionLevel] ?? "text-white";
+  return (
+    <div
+      className={`${CELL} ${LEVEL_COLORS[day.contributionLevel] ?? LEVEL_COLORS.NONE} cursor-default`}
+      title={day.date}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <AnimatePresence>
+        {hovered && day.contributionCount > 0 && (
+          <motion.span
+            initial={{ opacity: 0, scale: 0.4 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.4 }}
+            transition={{ type: "spring", stiffness: 320, damping: 24 }}
+            className={`pointer-events-none absolute inset-0 flex items-center justify-center text-[11px] font-black leading-none ${textColor}`}
+          >
+            {day.contributionCount}
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 type ContributionDay = {
   date: string;
@@ -16,7 +44,7 @@ type Week = {
 type GithubCache = { weeks: Week[]; total: number } | null;
 let githubCache: GithubCache = null;
 
-const CELL = "size-[18px] rounded-[4px]";
+const CELL = "size-[18px] rounded-[4px] relative overflow-hidden";
 const GAP = "gap-[4px]";
 
 const LEVEL_COLORS: Record<string, string> = {
@@ -25,6 +53,13 @@ const LEVEL_COLORS: Record<string, string> = {
   SECOND_QUARTILE: "bg-neutral-400 dark:bg-neutral-500",
   THIRD_QUARTILE: "bg-neutral-500 dark:bg-neutral-400",
   FOURTH_QUARTILE: "bg-neutral-600 dark:bg-neutral-200",
+};
+
+const LEVEL_TEXT: Record<string, string> = {
+  FIRST_QUARTILE:  "text-neutral-800 dark:text-white",
+  SECOND_QUARTILE: "text-neutral-800 dark:text-white",
+  THIRD_QUARTILE:  "text-white dark:text-neutral-800",
+  FOURTH_QUARTILE: "text-white dark:text-neutral-900",
 };
 
 const LEGEND = [
@@ -130,11 +165,7 @@ export const WorkWithMe = () => {
               {weeks.map((week, wi) => (
                 <div key={wi} className={`flex flex-col ${GAP}`}>
                   {week.contributionDays.map((day) => (
-                    <div
-                      key={day.date}
-                      title={`${day.date}: ${day.contributionCount} contributions`}
-                      className={`${CELL} ${LEVEL_COLORS[day.contributionLevel] ?? LEVEL_COLORS.NONE}`}
-                    />
+                    <HeatCell key={day.date} day={day} />
                   ))}
                 </div>
               ))}

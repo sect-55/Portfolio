@@ -1,84 +1,160 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { Subheading } from "./subheading";
+import { cn } from "@/lib/utils";
 import {
-  TypeScriptIcon,
-  SQLIcon,
-  NextjsIcon,
-  ReactIcon,
-  TailwindIcon,
-  BunIcon,
-  PostgreSQLIcon,
-  PrismaIcon,
-  RedisIcon,
-  DockerIcon,
-} from "./icons/general";
-import { Box } from "./box";
+  IconBrandTypescript, IconBrandReact, IconBrandNextjs, IconBrandTailwind,
+  IconBrandNodejs, IconBrandDocker, IconBrandVercel, IconBrandAmazon,
+  IconDatabase, IconServer, IconTerminal, IconGitBranch, IconShield,
+  IconCpu, IconNetwork, IconFlame, IconHexagon, IconBolt, IconWorld,
+  IconBraces, IconActivity, IconTable, IconStack,
+} from "@tabler/icons-react";
+
+const categories = [
+  {
+    name: "Web3",
+    span: false,
+    skills: ["Solidity", "Ethers.js", "Solana", "IPFS", "EVM"],
+    icon: <IconCpu size={24} />,
+  },
+  {
+    name: "DevOps",
+    span: false,
+    skills: ["Docker", "Linux", "CI/CD", "AWS"],
+  },
+  {
+    name: "Web2",
+    span: true,
+    extra: "mb-4",
+    skills: [
+      "TypeScript", "React", "Next.js", "Tailwind CSS", "Bun", "Node.js",
+      "PostgreSQL", "Prisma", "Redis", "SQL", "GraphQL", "WebSockets", "tRPC",
+    ],
+  },
+];
+
+const categoryIcons: Record<string, React.ReactNode> = {
+  Web3: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70">
+      <path d="M10.5 20.5 3 12l7.5-8.5" /><path d="m13.5 3.5 7.5 8.5-7.5 8.5" />
+    </svg>
+  ),
+  DevOps: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70">
+      <rect x="2" y="2" width="20" height="8" rx="2" /><rect x="2" y="14" width="20" height="8" rx="2" />
+      <line x1="6" y1="6" x2="6.01" y2="6" /><line x1="6" y1="18" x2="6.01" y2="18" />
+    </svg>
+  ),
+  Web2: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70">
+      <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
+    </svg>
+  ),
+};
+
+type TablerIcon = React.ComponentType<{ size?: number; className?: string }>;
+
+const skillIcons: Record<string, TablerIcon> = {
+  TypeScript: IconBrandTypescript,
+  React: IconBrandReact,
+  "Next.js": IconBrandNextjs,
+  "Tailwind CSS": IconBrandTailwind,
+  Bun: IconBolt,
+  "Node.js": IconBrandNodejs,
+  PostgreSQL: IconDatabase,
+  Prisma: IconStack,
+  Redis: IconFlame,
+  SQL: IconTable,
+  GraphQL: IconBraces,
+  WebSockets: IconActivity,
+  tRPC: IconNetwork,
+  Docker: IconBrandDocker,
+  Linux: IconTerminal,
+  "CI/CD": IconGitBranch,
+  AWS: IconBrandAmazon,
+  Vercel: IconBrandVercel,
+  Netlify: IconWorld,
+  Solidity: IconShield,
+  "Ethers.js": IconHexagon,
+  Solana: IconBolt,
+  IPFS: IconNetwork,
+  EVM: IconCpu,
+};
+
+function SkillTag({ skill }: { skill: string }) {
+  const [hovered, setHovered] = useState(false);
+  const Icon = skillIcons[skill];
+  return (
+    <motion.span
+      className={cn(
+        "relative inline-flex items-center py-0.5 pr-2 text-base cursor-default transition-colors duration-150",
+        Icon ? "pl-[22px]" : "pl-2",
+        hovered ? "text-foreground" : "text-foreground/70"
+      )}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <DotRect />
+      <AnimatePresence>
+        {hovered && Icon && (
+          <motion.span
+            initial={{ opacity: 0, scale: 0.4, x: -3 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            exit={{ opacity: 0, scale: 0.4, x: -3 }}
+            transition={{ type: "spring", stiffness: 340, damping: 28 }}
+            className="pointer-events-none absolute left-[4px] top-1/2 z-10 -translate-y-1/2 text-foreground"
+          >
+            <Icon size={13} />
+          </motion.span>
+        )}
+      </AnimatePresence>
+      {skill}
+    </motion.span>
+  );
+}
+
+function DotRect({ className }: { className?: string }) {
+  return (
+    <svg
+      className={cn("pointer-events-none absolute inset-0 h-full w-full", className)}
+      style={{ overflow: "visible" }}
+      aria-hidden
+    >
+      <rect
+        x="0" y="0" width="100%" height="100%"
+        fill="none"
+        strokeWidth="1"
+        strokeDasharray="1 5"
+        strokeLinecap="round"
+        className="stroke-foreground/40"
+      />
+    </svg>
+  );
+}
 
 export const Companies = () => {
-  const stack = [
-    {
-      title: "TypeScript",
-      icon: TypeScriptIcon,
-      boxClassName: "bg-linear-to-b from-blue-400 to-blue-600 ring-offset-blue-500",
-    },
-    {
-      title: "SQL",
-      icon: SQLIcon,
-      boxClassName: "bg-linear-to-b from-orange-400 to-orange-600 ring-offset-orange-500",
-    },
-    {
-      title: "Next.js",
-      icon: NextjsIcon,
-      boxClassName: "bg-linear-to-b from-neutral-400 to-neutral-600 ring-offset-neutral-500",
-    },
-    {
-      title: "React",
-      icon: ReactIcon,
-      boxClassName: "bg-linear-to-b from-cyan-400 to-cyan-600 ring-offset-cyan-500",
-    },
-    {
-      title: "Tailwind CSS",
-      icon: TailwindIcon,
-      boxClassName: "bg-linear-to-b from-sky-400 to-sky-600 ring-offset-sky-500",
-    },
-    {
-      title: "Bun",
-      icon: BunIcon,
-      boxClassName: "bg-linear-to-b from-yellow-400 to-yellow-600 ring-offset-yellow-500",
-    },
-    {
-      title: "PostgreSQL",
-      icon: PostgreSQLIcon,
-      boxClassName: "bg-linear-to-b from-indigo-400 to-indigo-600 ring-offset-indigo-500",
-    },
-    {
-      title: "Prisma",
-      icon: PrismaIcon,
-      boxClassName: "bg-linear-to-b from-slate-400 to-slate-600 ring-offset-slate-500",
-    },
-    {
-      title: "Redis",
-      icon: RedisIcon,
-      boxClassName: "bg-linear-to-b from-red-400 to-red-600 ring-offset-red-500",
-    },
-    {
-      title: "Docker",
-      icon: DockerIcon,
-      boxClassName: "bg-linear-to-b from-blue-500 to-blue-700 ring-offset-blue-600",
-    },
-  ];
-
   return (
     <section>
       <Subheading>Skills</Subheading>
-      <div className="mt-6 grid grid-cols-2 gap-6 md:grid-cols-5">
-        {stack.map(({ title, icon: Icon, boxClassName }) => (
-          <div key={title} className="flex flex-col items-center gap-3">
-            <Box className={boxClassName}>
-              <Icon className="size-4 text-white drop-shadow-xl drop-shadow-black/40" />
-            </Box>
-            <p className="text-foreground text-sm font-medium">{title}</p>
-          </div>
+      <div className="mt-6 grid grid-cols-1 gap-8 md:grid-cols-2">
+        {categories.map((cat) => (
+          <motion.div layout key={cat.name} className={cn("relative self-start p-4 pt-6", cat.span && "md:col-span-2", cat.extra)} transition={{ type: "tween", duration: 0.18, ease: "easeOut" }}>
+            <DotRect />
+            <div className="absolute -top-3 left-4 flex items-center gap-1.5 bg-background px-2 py-1 text-base font-medium text-foreground">
+              <div className="relative flex items-center gap-1.5 px-0.5">
+                <DotRect />
+                {categoryIcons[cat.name]}
+                {cat.name}
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {cat.skills.map((skill) => (
+                <SkillTag key={skill} skill={skill} />
+              ))}
+            </div>
+          </motion.div>
         ))}
       </div>
     </section>

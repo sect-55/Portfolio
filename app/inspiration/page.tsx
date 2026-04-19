@@ -47,6 +47,38 @@ export default async function InspirationPage() {
       ),
     },
     {
+      title: "Solana Foundation",
+      description: "Building and growing the Solana ecosystem",
+      href: "https://x.com/SolanaFndn",
+      src: (
+        <img src="https://unavatar.io/x/SolanaFndn" alt="Solana Foundation" className="size-full" />
+      ),
+    },
+    {
+      title: "usagimaruma",
+      description: "Creative builder I follow for inspiration",
+      href: "https://x.com/usagimaruma",
+      src: (
+        <img src="https://unavatar.io/x/usagimaruma" alt="usagimaruma" className="size-full" />
+      ),
+    },
+    {
+      title: "François Chollet",
+      description: "Creator of Keras, AI researcher at Google",
+      href: "https://x.com/fchollet",
+      src: (
+        <img src="https://unavatar.io/x/fchollet" alt="François Chollet" className="size-full" />
+      ),
+    },
+    {
+      title: "Jeremy Howard",
+      description: "Co-founder of fast.ai, making deep learning accessible",
+      href: "https://x.com/jeremyphoward",
+      src: (
+        <img src="https://unavatar.io/x/jeremyphoward" alt="Jeremy Howard" className="size-full" />
+      ),
+    },
+    {
       title: "Yen-Ling Kuo",
       description: "AI researcher pushing boundaries",
       href: "https://x.com/yenling_kuo",
