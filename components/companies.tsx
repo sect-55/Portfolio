@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Subheading } from "./subheading";
 import { cn } from "@/lib/utils";
@@ -22,7 +22,7 @@ const categories = [
   {
     name: "DevOps",
     span: false,
-    skills: ["Docker", "Linux", "CI/CD", "AWS"],
+    skills: ["Docker", "CI/CD", "AWS"],
   },
   {
     name: "Web2",
@@ -30,7 +30,7 @@ const categories = [
     extra: "mb-4",
     skills: [
       "TypeScript", "React", "Next.js", "Tailwind CSS", "Bun", "Node.js",
-      "PostgreSQL", "Prisma", "Redis", "SQL", "GraphQL", "WebSockets", "tRPC",
+      "GraphQL","SQL","Prisma", "Redis","PostgreSQL",  "WebSockets", "tRPC",
     ],
   },
 ];
@@ -85,16 +85,19 @@ const skillIcons: Record<string, TablerIcon> = {
 
 function SkillTag({ skill }: { skill: string }) {
   const [hovered, setHovered] = useState(false);
+  const leaveTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const Icon = skillIcons[skill];
   return (
     <motion.span
       className={cn(
         "relative inline-flex items-center py-0.5 pr-2 text-base cursor-default transition-colors duration-150",
-        Icon ? "pl-[22px]" : "pl-2",
+        "pl-2",
         hovered ? "text-foreground" : "text-foreground/70"
       )}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      animate={{ paddingLeft: hovered && Icon ? 22 : 8 }}
+      transition={{ type: "tween", duration: 0.18, ease: "easeOut" }}
+      onPointerEnter={() => { clearTimeout(leaveTimer.current); setHovered(true); }}
+      onPointerLeave={() => { leaveTimer.current = setTimeout(() => setHovered(false), 80); }}
     >
       <DotRect />
       <AnimatePresence>
@@ -140,7 +143,7 @@ export const Companies = () => {
       <Subheading>Skills</Subheading>
       <div className="mt-6 grid grid-cols-1 gap-8 md:grid-cols-2">
         {categories.map((cat) => (
-          <motion.div layout key={cat.name} className={cn("relative self-start p-4 pt-6", cat.span && "md:col-span-2", cat.extra)} transition={{ type: "tween", duration: 0.18, ease: "easeOut" }}>
+          <motion.div layout key={cat.name} className={cn("relative self-start w-fit p-4 pt-6", cat.span && "md:col-span-2 w-full", cat.extra)} transition={{ type: "tween", duration: 0.18, ease: "easeOut" }}>
             <DotRect />
             <div className="absolute -top-3 left-4 flex items-center gap-1.5 bg-background px-2 py-1 text-base font-medium text-foreground">
               <div className="relative flex items-center gap-1.5 px-0.5">

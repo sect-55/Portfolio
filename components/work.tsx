@@ -7,7 +7,7 @@ import { LinkPreview } from "./link-preview";
 const workItems = [
   {
     href: "https://stack-viewer-eight.vercel.app/",
-    title: "Stack Analyze",
+    title: "Stack Privacy",
     description:
       "Analyze any website's technology stack instantly — detect frameworks, libraries, and tools powering any URL with a single lookup.",
     tags: ["Next.js", "TypeScript", "Wappalyzer"],
