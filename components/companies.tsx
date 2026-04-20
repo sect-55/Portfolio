@@ -29,8 +29,8 @@ const categories = [
     span: true,
     extra: "mb-4",
     skills: [
-      "TypeScript", "React", "Next.js", "Tailwind CSS", "Bun", "Node.js",
-      "GraphQL","SQL","Prisma", "Redis","PostgreSQL",  "WebSockets", "tRPC",
+      "TypeScript", "React", "Next.js", "Tailwind CSS", "Redis","Prisma",
+      "SQL","GraphQL","Bun","PostgreSQL", "WebSockets", "tRPC",
     ],
   },
 ];
