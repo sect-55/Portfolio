@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { Subheading } from "./subheading";
 
 function HeatCell({ day }: { day: ContributionDay }) {
@@ -9,24 +8,14 @@ function HeatCell({ day }: { day: ContributionDay }) {
   const textColor = LEVEL_TEXT[day.contributionLevel] ?? "text-white";
   return (
     <div
-      className={`${CELL} ${LEVEL_COLORS[day.contributionLevel] ?? LEVEL_COLORS.NONE} cursor-default`}
+      className={`${CELL} ${LEVEL_COLORS[day.contributionLevel] ?? LEVEL_COLORS.NONE} cursor-default transition-transform duration-150 ${hovered && day.contributionCount > 0 ? "scale-125 z-10 relative" : ""}`}
       title={day.date}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <AnimatePresence>
-        {hovered && day.contributionCount > 0 && (
-          <motion.span
-            initial={{ opacity: 0, scale: 0.4 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.4 }}
-            transition={{ type: "spring", stiffness: 320, damping: 24 }}
-            className={`pointer-events-none absolute inset-0 flex items-center justify-center text-[11px] font-black leading-none ${textColor}`}
-          >
-            {day.contributionCount}
-          </motion.span>
-        )}
-      </AnimatePresence>
+      <span className={`pointer-events-none absolute inset-0 flex items-center justify-center text-[11px] font-black leading-none transition-opacity duration-150 ${hovered && day.contributionCount > 0 ? "opacity-100" : "opacity-0"} ${textColor}`}>
+        {day.contributionCount}
+      </span>
     </div>
   );
 }

@@ -37,7 +37,7 @@ export default function ContactPage() {
     setForm(f => ({ ...f, [field]: e.target.value }));
 
   return (
-    <>
+    <div className="no-plus-cursor">
       <Container className="mt-6">
         <div className="flex flex-col gap-10 md:flex-row md:gap-12">
 
@@ -145,6 +145,6 @@ export default function ContactPage() {
       <Container>
         <DottedSeparator className="my-8" />
       </Container>
-    </>
+    </div>
   );
 }

@@ -19,9 +19,13 @@ export const Settings = () => {
 
   const toggle = () => {
     const next = !dark;
-    setDark(next);
-    document.documentElement.classList.toggle("dark", next);
-    localStorage.setItem(STORAGE_KEY, next ? "dark" : "light");
+    const apply = () => {
+      setDark(next);
+      document.documentElement.classList.toggle("dark", next);
+      localStorage.setItem(STORAGE_KEY, next ? "dark" : "light");
+    };
+    if (!document.startViewTransition) { apply(); return; }
+    document.startViewTransition(apply);
   };
 
   return (
@@ -32,7 +36,8 @@ export const Settings = () => {
       initial={{ opacity: 0, rotate: -90 }}
       animate={{ opacity: 1, rotate: 0 }}
       transition={{ type: "spring", stiffness: 200, damping: 10 }}
-      className="fixed top-5 right-5 z-50 flex size-10 items-center justify-center"
+      style={{ viewTransitionName: "theme-btn" }}
+      className="fixed top-5 right-5 z-50 flex size-10 select-none items-center justify-center"
     >
       <motion.div
         key={dark ? "sun" : "moon"}

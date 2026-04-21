@@ -112,7 +112,7 @@ export default async function InspirationPage() {
     },
   ];
   return (
-    <>
+    <div className="no-plus-cursor">
       <Container className="min-h-screen">
         <p className="text-foreground pt-4 text-base">
           A list of all the people that I look up to, websites that I admire,
@@ -146,6 +146,6 @@ export default async function InspirationPage() {
       <Container>
         <DottedSeparator className="my-8" />
       </Container>
-    </>
+    </div>
   );
 }
