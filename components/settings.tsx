@@ -2,7 +2,7 @@
 import { IconMoon, IconSun } from "@tabler/icons-react";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
-
+import KeyboardControls from "@/components/KeyboardControls";
 const STORAGE_KEY = "theme";
 
 export const Settings = () => {
@@ -29,29 +29,34 @@ export const Settings = () => {
   };
 
   return (
-    <motion.button
-      onClick={toggle}
-      whileTap={{ scale: 0.85 }}
-      whileHover={{ scale: 1.15 }}
-      initial={{ opacity: 0, rotate: -90 }}
-      animate={{ opacity: 1, rotate: 0 }}
-      transition={{ type: "spring", stiffness: 200, damping: 10 }}
-      style={{ viewTransitionName: "theme-btn" }}
-      className="fixed top-5 right-5 z-50 flex size-10 select-none items-center justify-center"
-    >
-      <motion.div
-        key={dark ? "sun" : "moon"}
-        initial={{ scale: 0, rotate: -180, opacity: 0 }}
-        animate={{ scale: 1, rotate: 0, opacity: 1 }}
-        exit={{ scale: 0, rotate: 180, opacity: 0 }}
-        transition={{ type: "spring", stiffness: 250, damping: 15 }}
+    <div className="fixed top-5 right-5 z-50 flex items-center gap-3">
+      <div className="relative z-[51]">
+        <KeyboardControls />
+      </div>
+      <motion.button
+        onClick={toggle}
+        whileTap={{ scale: 0.85 }}
+        whileHover={{ scale: 1.15 }}
+        initial={{ opacity: 0, rotate: -90 }}
+        animate={{ opacity: 1, rotate: 0 }}
+        transition={{ type: "spring", stiffness: 200, damping: 10 }}
+        style={{ viewTransitionName: "theme-btn" }}
+        className="flex size-10 select-none items-center justify-center"
       >
-        {dark ? (
-          <IconSun className="size-6 text-foreground" />
-        ) : (
-          <IconMoon className="size-6 text-foreground" />
-        )}
-      </motion.div>
-    </motion.button>
+        <motion.div
+          key={dark ? "sun" : "moon"}
+          initial={{ scale: 0, rotate: -180, opacity: 0 }}
+          animate={{ scale: 1, rotate: 0, opacity: 1 }}
+          exit={{ scale: 0, rotate: 180, opacity: 0 }}
+          transition={{ type: "spring", stiffness: 250, damping: 15 }}
+        >
+          {dark ? (
+            <IconSun className="size-6 text-foreground" />
+          ) : (
+            <IconMoon className="size-6 text-foreground" />
+          )}
+        </motion.div>
+      </motion.button>
+    </div>
   );
 };
