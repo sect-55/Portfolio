@@ -294,6 +294,7 @@ export default function KeyboardControls() {
           html.classList.add("dark");
           localStorage.setItem("theme", "dark");
         }
+        window.dispatchEvent(new Event("theme-toggle"));
         setHint("Theme toggled");
       },
       keywords: ["dark", "light", "theme", "mode", "color"],
@@ -480,6 +481,7 @@ export default function KeyboardControls() {
             html.classList.add("dark");
             localStorage.setItem("theme", "dark");
           }
+          window.dispatchEvent(new Event("theme-toggle"));
           setHint("Theme toggled");
         };
         if (!document.startViewTransition) { apply(); return; }
@@ -700,16 +702,16 @@ export default function KeyboardControls() {
           border: 1px solid rgba(128,128,128,0.25);
           background: transparent;
           color: inherit;
-          cursor: pointer;
           font-size: 13px;
           font-family: inherit;
-          transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+          transition: border-color 0.15s, background 0.15s, box-shadow 0.15s, transform 0.15s;
           vertical-align: middle;
           outline: none;
         }
         .kb-trigger:hover {
           border-color: rgba(128,128,128,0.5);
           background: rgba(128,128,128,0.07);
+          transform: scale(1.03);
         }
         .kb-trigger:focus-visible {
           box-shadow: 0 0 0 2px currentColor;
