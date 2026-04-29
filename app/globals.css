@@ -129,12 +129,12 @@ html {
 }
 
 @keyframes theme-reveal {
-  from { clip-path: circle(0% at 50% 50%);   filter: blur(12px); }
-  to   { clip-path: circle(150% at 50% 50%); filter: blur(0px);  }
+  from { clip-path: inset(0 0 100% 100%);   filter: blur(12px); }
+  to   { clip-path: inset(0 0 0 0);         filter: blur(0px);  }
 }
 
 ::view-transition-new(root) {
-  animation: theme-reveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: theme-reveal 0.9s cubic-bezier(0.4, 0, 0, 1) forwards;
   z-index: 1;
 }
 
