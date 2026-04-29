@@ -150,8 +150,11 @@ html {
 .no-plus-cursor a:hover,
 .no-plus-cursor button:hover,
 .no-plus-cursor [role="button"]:hover,
-button.fixed:hover {
-  cursor: pointer;
+button.fixed:hover,
+body:has(.no-plus-cursor) a:hover,
+body:has(.no-plus-cursor) button:hover,
+body:has(.no-plus-cursor) [role="button"]:hover {
+  cursor: pointer !important;
 }
 
 a:hover:not(nav a), button:hover:not(nav button):not(.kb-trigger):not([aria-label="Open keyboard command palette"]):not(.theme-toggle), [role="button"]:hover:not(nav [role="button"]) {

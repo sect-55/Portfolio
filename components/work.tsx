@@ -6,6 +6,13 @@ import { LinkPreview } from "./link-preview";
 
 const workItems = [
   {
+    href: "https://zelicon.vercel.app/",
+    title: "Zelicon",
+    description:
+      "A 3D icon library featuring 20+ customizable SVG icons with interactive previews, real-time color controls,with weekly drops and export options for modern web and mobile projects.",
+    tags: ["Next.js", "Three.js", "WebGL"],
+  },
+  {
     href: "https://stack-viewer-eight.vercel.app/",
     title: "Stack Privacy",
     description:

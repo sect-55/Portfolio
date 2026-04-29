@@ -51,8 +51,8 @@ export const Settings = () => {
   };
 
   return (
-    <div className="fixed top-5 right-5 z-50 flex items-center gap-3">
-      <div className="relative z-[51]">
+    <div className="fixed top-4 right-4 z-[60] flex items-center gap-3">
+      <div className="relative rounded-lg bg-theme-bg">
         <KeyboardControls />
       </div>
       <motion.button
@@ -63,7 +63,7 @@ export const Settings = () => {
         animate={{ opacity: 1, rotate: 0 }}
         transition={{ type: "spring", stiffness: 200, damping: 10 }}
         style={{ viewTransitionName: "theme-btn" }}
-        className="theme-toggle flex size-10 select-none items-center justify-center cursor-default"
+        className="theme-toggle flex size-10 select-none items-center justify-center cursor-default rounded-full bg-theme-bg"
       >
         <motion.div
           key={dark ? "sun" : "moon"}
