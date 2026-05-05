@@ -13,8 +13,6 @@ function isActivePath(pathname: string, href: string) {
 
 const links = [
   { title: "Home", href: "/" },
-  { title: "Resume", href: "/resume" },
-  { title: "Favorites", href: "/inspiration" },
   { title: "Contact", href: "/contact" },
 ];
 
