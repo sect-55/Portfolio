@@ -1,5 +1,4 @@
-export const PDF_URL =
-  "https://raw.githubusercontent.com/sect-55/sect-55/main/sudharsanBackend.pdf";
+export const PDF_URL = "/api/resume-download";
 
 let blobUrl: string | null = null;
 let prefetching = false;

@@ -1,8 +1,8 @@
 "use client";
 import { IconMoon, IconSun } from "@tabler/icons-react";
 import { motion } from "motion/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import KeyboardControls from "@/components/KeyboardControls";
 const STORAGE_KEY = "theme";
 
 export const Settings = () => {
@@ -51,19 +51,23 @@ export const Settings = () => {
   };
 
   return (
-    <div className="fixed top-4 right-4 z-[60] flex items-center gap-3">
-      <div className="relative rounded-lg bg-theme-bg">
-        <KeyboardControls />
-      </div>
+    <div className="fixed top-4 right-4 z-[60] flex items-center gap-2">
+      <Link
+        href="/contact"
+        className="group/availability rounded-full border border-neutral-300/45 bg-transparent px-3.5 py-2 text-sm font-medium text-foreground/80 shadow-sm shadow-black/5 backdrop-blur-xl transition-colors duration-200 hover:border-neutral-500/60 hover:text-foreground dark:border-white/15 dark:hover:border-white/30"
+      >
+        <span className="inline-block transition-transform duration-200 group-hover/availability:scale-105">
+          Available for work
+        </span>
+      </Link>
       <motion.button
         onClick={toggle}
         whileTap={{ scale: 0.85 }}
-        whileHover={{ scale: 1.15 }}
         initial={{ opacity: 0, rotate: -90 }}
         animate={{ opacity: 1, rotate: 0 }}
         transition={{ type: "spring", stiffness: 200, damping: 10 }}
         style={{ viewTransitionName: "theme-btn" }}
-        className="theme-toggle flex size-10 select-none items-center justify-center cursor-default rounded-full bg-theme-bg"
+        className="theme-toggle group/theme-toggle flex size-10 select-none items-center justify-center rounded-full border border-neutral-300/45 bg-transparent shadow-sm shadow-black/5 backdrop-blur-xl cursor-default dark:border-white/15"
       >
         <motion.div
           key={dark ? "sun" : "moon"}
@@ -72,11 +76,13 @@ export const Settings = () => {
           exit={{ scale: 0, rotate: 180, opacity: 0 }}
           transition={{ type: "spring", stiffness: 250, damping: 15 }}
         >
-          {dark ? (
-            <IconSun className="size-6 text-foreground" />
-          ) : (
-            <IconMoon className="size-6 text-foreground" />
-          )}
+          <span className="block transition-transform duration-200 group-hover/theme-toggle:scale-[1.15]">
+            {dark ? (
+              <IconSun className="size-6 text-foreground" />
+            ) : (
+              <IconMoon className="size-6 text-foreground" />
+            )}
+          </span>
         </motion.div>
       </motion.button>
     </div>

@@ -121,7 +121,7 @@ export const Header = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8"
             style={{ backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", backgroundColor: "rgba(0,0,0,0.4)" }}
             onClick={(e) => {
               if (e.target === e.currentTarget) closeResume();
@@ -170,7 +170,7 @@ export const Header = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.16, ease: "easeOut" }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8"
             style={{ backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)" }}
             onClick={(e) => {
               if (e.target === e.currentTarget) closeContributions();

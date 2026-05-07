@@ -35,7 +35,10 @@ export const PdfViewer = ({ url }: { url: string }) => {
   useEffect(() => {
     const updateWidth = () => {
       if (containerRef.current) {
-        setWidth(containerRef.current.clientWidth);
+        const nextWidth = containerRef.current.clientWidth;
+        if (nextWidth > 0) {
+          setWidth(Math.max(320, nextWidth));
+        }
       }
     };
     updateWidth();
