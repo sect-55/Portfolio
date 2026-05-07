@@ -15,8 +15,8 @@ type Week = {
 type GithubCache = { weeks: Week[] } | null;
 let githubCache: GithubCache = null;
 
-const CELL = "size-[21px] rounded-[5px] relative overflow-hidden";
-const GAP = "gap-[5px]";
+const CELL = "size-[14px] rounded-[3px] relative overflow-hidden sm:size-[18px] sm:rounded-[4px] md:size-[21px] md:rounded-[5px]";
+const GAP = "gap-[3px] sm:gap-[4px] md:gap-[5px]";
 
 const LEVEL_COLORS: Record<string, string> = {
   NONE: "bg-transparent ring-1 ring-neutral-400/45 dark:ring-white/25",
@@ -52,7 +52,7 @@ function HeatCell({ day }: { day: ContributionDay }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <span className={`pointer-events-none absolute inset-0 flex items-center justify-center text-[11px] font-black leading-none transition-opacity duration-150 ${hovered && day.contributionCount > 0 ? "opacity-100" : "opacity-0"} ${textColor}`}>
+      <span className={`pointer-events-none absolute inset-0 flex items-center justify-center text-[9px] font-black leading-none transition-opacity duration-150 sm:text-[10px] md:text-[11px] ${hovered && day.contributionCount > 0 ? "opacity-100" : "opacity-0"} ${textColor}`}>
         {day.contributionCount}
       </span>
     </div>
@@ -92,9 +92,9 @@ export function GithubContributionsHeatmap() {
   if (hasError) return null;
 
   return (
-    <div className="flex w-full items-center justify-center gap-6 overflow-x-auto overflow-y-visible py-4 no-scrollbar">
+    <div className="flex w-full flex-col items-center justify-center gap-4 overflow-x-auto overflow-y-visible py-4 no-scrollbar sm:flex-row sm:gap-6">
       {loading ? (
-        <div className={`flex ${GAP}`}>
+        <div className={`flex shrink-0 ${GAP}`}>
           {Array.from({ length: 18 }).map((_, wi) => (
             <div key={wi} className={`flex flex-col ${GAP}`}>
               {Array.from({ length: 7 }).map((_, di) => (
@@ -107,7 +107,7 @@ export function GithubContributionsHeatmap() {
           ))}
         </div>
       ) : (
-        <div className={`flex ${GAP}`}>
+        <div className={`flex shrink-0 ${GAP}`}>
           {weeks.map((week, wi) => (
             <div key={wi} className={`flex flex-col ${GAP}`}>
               {week.contributionDays.map((day) => (

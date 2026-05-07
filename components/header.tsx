@@ -169,7 +169,7 @@ export const Header = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.16, ease: "easeOut" }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
             style={{ backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)" }}
             onClick={(e) => {
@@ -181,11 +181,11 @@ export const Header = () => {
             }}
           >
             <motion.div
-              initial={{ opacity: 0, y: 40, scale: 0.95 }}
+              initial={{ opacity: 0, y: 18, scale: 0.92 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 30, scale: 0.97 }}
-              transition={{ type: "spring", damping: 28, stiffness: 300 }}
-              className="relative w-full max-w-4xl max-h-[90vh] overflow-visible p-6 sm:p-8"
+              exit={{ opacity: 0, y: 12, scale: 0.96 }}
+              transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full max-w-4xl max-h-[90vh] overflow-visible px-2 py-6 sm:p-8"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex max-h-[78vh] items-center justify-center overflow-x-auto overflow-y-visible no-scrollbar">
