@@ -128,6 +128,14 @@ html {
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @keyframes theme-reveal {
   from { clip-path: inset(0 0 100% 100%);   filter: blur(12px); }
   to   { clip-path: inset(0 0 0 0);         filter: blur(0px);  }
