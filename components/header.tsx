@@ -185,10 +185,10 @@ export const Header = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 30, scale: 0.97 }}
               transition={{ type: "spring", damping: 28, stiffness: 300 }}
-              className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden p-6 sm:p-8"
+              className="relative w-full max-w-4xl max-h-[90vh] overflow-visible p-6 sm:p-8"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="overflow-y-auto no-scrollbar max-h-[78vh]">
+              <div className="flex max-h-[78vh] items-center justify-center overflow-x-auto overflow-y-visible no-scrollbar">
                 <GithubContributionsHeatmap />
               </div>
             </motion.div>

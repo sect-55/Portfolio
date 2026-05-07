@@ -15,16 +15,24 @@ type Week = {
 type GithubCache = { weeks: Week[] } | null;
 let githubCache: GithubCache = null;
 
-const CELL = "size-[18px] rounded-[4px] relative overflow-hidden";
-const GAP = "gap-[4px]";
+const CELL = "size-[21px] rounded-[5px] relative overflow-hidden";
+const GAP = "gap-[5px]";
 
 const LEVEL_COLORS: Record<string, string> = {
-  NONE: "bg-neutral-200/25 ring-1 ring-white/25 dark:bg-white/5 dark:ring-white/10",
+  NONE: "bg-transparent ring-1 ring-neutral-400/45 dark:ring-white/25",
   FIRST_QUARTILE: "bg-neutral-300/45 ring-1 ring-white/20 dark:bg-neutral-700/45 dark:ring-white/10",
   SECOND_QUARTILE: "bg-neutral-400/55 ring-1 ring-white/20 dark:bg-neutral-500/55 dark:ring-white/10",
   THIRD_QUARTILE: "bg-neutral-500/65 ring-1 ring-white/20 dark:bg-neutral-400/65 dark:ring-white/10",
   FOURTH_QUARTILE: "bg-neutral-700/75 ring-1 ring-white/25 dark:bg-neutral-100/75 dark:ring-white/20",
 };
+
+const LEGEND = [
+  "NONE",
+  "FIRST_QUARTILE",
+  "SECOND_QUARTILE",
+  "THIRD_QUARTILE",
+  "FOURTH_QUARTILE",
+];
 
 const LEVEL_TEXT: Record<string, string> = {
   FIRST_QUARTILE: "text-neutral-800 dark:text-white",
@@ -84,7 +92,7 @@ export function GithubContributionsHeatmap() {
   if (hasError) return null;
 
   return (
-    <div className="overflow-x-auto no-scrollbar">
+    <div className="flex w-full items-center justify-center gap-6 overflow-x-auto overflow-y-visible py-4 no-scrollbar">
       {loading ? (
         <div className={`flex ${GAP}`}>
           {Array.from({ length: 18 }).map((_, wi) => (
@@ -109,6 +117,15 @@ export function GithubContributionsHeatmap() {
           ))}
         </div>
       )}
+      <div className="flex shrink-0 items-center gap-2 text-xs font-medium text-neutral-700/70 dark:text-neutral-200/70">
+        <span>Less</span>
+        <div className={`flex ${GAP}`}>
+          {LEGEND.map((level) => (
+            <div key={level} className={`${CELL} ${LEVEL_COLORS[level]} backdrop-blur-md`} />
+          ))}
+        </div>
+        <span>More</span>
+      </div>
     </div>
   );
 }
