@@ -171,7 +171,7 @@ export const Header = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8"
-            style={{ backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", backgroundColor: "rgba(0,0,0,0.4)" }}
+            style={{ backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)" }}
             onClick={(e) => {
               if (e.target === e.currentTarget) closeContributions();
             }}
@@ -185,7 +185,7 @@ export const Header = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 30, scale: 0.97 }}
               transition={{ type: "spring", damping: 28, stiffness: 300 }}
-              className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-xl border border-white/25 bg-white/35 p-6 shadow-2xl shadow-black/20 backdrop-blur-2xl dark:border-white/10 dark:bg-neutral-950/35 sm:p-8"
+              className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden p-6 sm:p-8"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="overflow-y-auto no-scrollbar max-h-[78vh]">

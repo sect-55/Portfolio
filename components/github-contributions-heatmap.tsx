@@ -19,11 +19,11 @@ const CELL = "size-[18px] rounded-[4px] relative overflow-hidden";
 const GAP = "gap-[4px]";
 
 const LEVEL_COLORS: Record<string, string> = {
-  NONE: "bg-white/35 border border-white/30 dark:bg-white/5 dark:border-white/10",
-  FIRST_QUARTILE: "bg-neutral-300/70 dark:bg-neutral-700/80",
-  SECOND_QUARTILE: "bg-neutral-400/80 dark:bg-neutral-500/80",
-  THIRD_QUARTILE: "bg-neutral-500/90 dark:bg-neutral-400/85",
-  FOURTH_QUARTILE: "bg-neutral-700/95 dark:bg-neutral-100/90",
+  NONE: "bg-neutral-200/25 ring-1 ring-white/25 dark:bg-white/5 dark:ring-white/10",
+  FIRST_QUARTILE: "bg-neutral-300/45 ring-1 ring-white/20 dark:bg-neutral-700/45 dark:ring-white/10",
+  SECOND_QUARTILE: "bg-neutral-400/55 ring-1 ring-white/20 dark:bg-neutral-500/55 dark:ring-white/10",
+  THIRD_QUARTILE: "bg-neutral-500/65 ring-1 ring-white/20 dark:bg-neutral-400/65 dark:ring-white/10",
+  FOURTH_QUARTILE: "bg-neutral-700/75 ring-1 ring-white/25 dark:bg-neutral-100/75 dark:ring-white/20",
 };
 
 const LEVEL_TEXT: Record<string, string> = {
@@ -39,7 +39,7 @@ function HeatCell({ day }: { day: ContributionDay }) {
 
   return (
     <div
-      className={`${CELL} ${LEVEL_COLORS[day.contributionLevel] ?? LEVEL_COLORS.NONE} cursor-default shadow-sm shadow-black/5 transition-transform duration-150 ${hovered && day.contributionCount > 0 ? "scale-125 z-10 relative" : ""}`}
+      className={`${CELL} ${LEVEL_COLORS[day.contributionLevel] ?? LEVEL_COLORS.NONE} cursor-default shadow-sm shadow-black/10 backdrop-blur-md transition-transform duration-150 ${hovered && day.contributionCount > 0 ? "scale-125 z-10 relative" : ""}`}
       title={day.date}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
