@@ -9,10 +9,13 @@ import { PdfViewerWrapper } from "./pdf-viewer-wrapper";
 import { GithubContributionsHeatmap } from "./github-contributions-heatmap";
 import { PDF_URL } from "@/lib/pdf-cache";
 import { AnimatePresence, motion } from "motion/react";
+import { InspirationContent } from "./inspiration-content";
+import { BackIconButton } from "@/components/back-icon-button";
 
 export const Header = () => {
   const [resumeOpen, setResumeOpen] = useState(false);
   const [contributionsOpen, setContributionsOpen] = useState(false);
+  const [inspirationOpen, setInspirationOpen] = useState(false);
 
   const openResume = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
@@ -24,6 +27,11 @@ export const Header = () => {
     setContributionsOpen(true);
   }, []);
 
+  const openInspiration = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    setInspirationOpen(true);
+  }, []);
+
   const closeResume = useCallback(() => {
     setResumeOpen(false);
   }, []);
@@ -32,9 +40,13 @@ export const Header = () => {
     setContributionsOpen(false);
   }, []);
 
+  const closeInspiration = useCallback(() => {
+    setInspirationOpen(false);
+  }, []);
+
   // Lock body scroll when modal open
   useEffect(() => {
-    if (resumeOpen || contributionsOpen) {
+    if (resumeOpen || contributionsOpen || inspirationOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -42,20 +54,28 @@ export const Header = () => {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [resumeOpen, contributionsOpen]);
+  }, [resumeOpen, contributionsOpen, inspirationOpen]);
 
   // Close on Escape
   useEffect(() => {
-    if (!resumeOpen && !contributionsOpen) return;
+    if (!resumeOpen && !contributionsOpen && !inspirationOpen) return;
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         closeResume();
         closeContributions();
+        closeInspiration();
       }
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [resumeOpen, contributionsOpen, closeResume, closeContributions]);
+  }, [
+    resumeOpen,
+    contributionsOpen,
+    inspirationOpen,
+    closeResume,
+    closeContributions,
+    closeInspiration,
+  ]);
 
   return (
     <>
@@ -89,15 +109,19 @@ export const Header = () => {
           </button>{" "}
           and{" "}
           what{" "}
-          <Link
-            href="/inspiration"
-            className="group text-primary relative inline-block"
+          <button
+            type="button"
+            onClick={openInspiration}
+            className="group text-primary relative inline-block cursor-pointer"
           >
-            <span className="relative inline-block" style={{ paddingBottom: "0.05rem" }}>
+            <span
+              className="relative inline-block"
+              style={{ paddingBottom: "0.05rem" }}
+            >
               inspires
               <DottedUnderline />
             </span>
-          </Link>{" "}
+          </button>{" "}
           me{" "}
           tell the full story. My GitHub{" "}
           <button
@@ -122,7 +146,11 @@ export const Header = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
             className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8"
-            style={{ backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", backgroundColor: "rgba(0,0,0,0.4)" }}
+            style={{
+              backdropFilter: "blur(18px)",
+              WebkitBackdropFilter: "blur(18px)",
+              backgroundColor: "rgba(10,10,10,0.20)",
+            }}
             onClick={(e) => {
               if (e.target === e.currentTarget) closeResume();
             }}
@@ -136,14 +164,17 @@ export const Header = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 30, scale: 0.97 }}
               transition={{ type: "spring", damping: 28, stiffness: 300 }}
-              className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-xl border border-neutral-200/50 bg-white/90 shadow-2xl dark:border-neutral-700/50 dark:bg-neutral-900/90"
+              className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
+              <div className="absolute top-3 left-3 z-10">
+                <BackIconButton onClick={closeResume} ariaLabel="Back" />
+              </div>
               {/* Download button */}
               <a
                 href="/api/resume-download"
                 download="sudharsanBackend.pdf"
-                className="absolute top-3 right-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-neutral-100/80 text-neutral-500 transition-colors hover:bg-neutral-200 hover:text-neutral-800 dark:bg-neutral-800/80 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-200 cursor-pointer"
+                className="absolute top-3 right-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-neutral-100/70 text-neutral-600 backdrop-blur-xl transition-colors hover:bg-neutral-200 hover:text-neutral-800 dark:bg-neutral-900/40 dark:text-neutral-200 dark:hover:bg-neutral-800/60 cursor-pointer"
                 aria-label="Download resume"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -188,8 +219,52 @@ export const Header = () => {
               className="relative w-full max-w-4xl max-h-[90vh] overflow-visible px-2 py-6 sm:p-8"
               onClick={(e) => e.stopPropagation()}
             >
+              <div className="absolute top-3 left-3 z-10">
+                <BackIconButton onClick={closeContributions} ariaLabel="Back" />
+              </div>
               <div className="flex max-h-[78vh] items-center justify-center overflow-x-auto overflow-y-visible no-scrollbar">
                 <GithubContributionsHeatmap />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Inspiration Modal */}
+      <AnimatePresence>
+        {inspirationOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8"
+            style={{
+              backdropFilter: "blur(18px)",
+              WebkitBackdropFilter: "blur(18px)",
+              backgroundColor: "rgba(10,10,10,0.20)",
+            }}
+            onClick={(e) => {
+              if (e.target === e.currentTarget) closeInspiration();
+            }}
+            onContextMenu={(e) => {
+              e.preventDefault();
+              closeInspiration();
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 18, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 12, scale: 0.98 }}
+              transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="absolute top-3 left-3 z-10">
+                <BackIconButton onClick={closeInspiration} ariaLabel="Back" />
+              </div>
+              <div className="max-h-[90vh] overflow-y-auto no-scrollbar px-2 py-6 sm:p-8">
+                <InspirationContent mode="modal" />
               </div>
             </motion.div>
           </motion.div>
