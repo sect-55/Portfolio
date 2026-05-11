@@ -8,15 +8,28 @@ export function BackIconButton({
   viewTransitionName,
   ariaLabel = "Back",
 }: {
-  onClick: () => void;
+  onClick?: () => void;
   className?: string;
   viewTransitionName?: string;
   ariaLabel?: string;
 }) {
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+      return;
+    }
+    const nav = () => (window.location.href = "/");
+    if (!document.startViewTransition) {
+      nav();
+      return;
+    }
+    document.startViewTransition(nav);
+  };
+
   return (
     <motion.button
       type="button"
-      onClick={onClick}
+      onClick={handleClick}
       whileTap={{ scale: 0.94 }}
       initial={{ opacity: 0, x: -10 }}
       animate={{ opacity: 1, x: 0 }}
